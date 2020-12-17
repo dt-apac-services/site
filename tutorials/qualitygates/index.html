@@ -1,0 +1,633 @@
+
+<!doctype html>
+
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  <meta charset="UTF-8">
+  <title>HOT Session: Quality Gates</title>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
+  <style>
+    .success {
+      color: #1e8e3e;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+  <script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    document.getElementById("arrow-back").setAttribute("href", "https://dt-apac-services.github.io/site");
+  });
+  </script>
+</head>
+<body>
+  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+  <google-codelab codelab-gaid=""
+                  id="qualitygates"
+                  title="HOT Session: Quality Gates"
+                  environment="web"
+                  feedback-link="">
+    
+      <google-codelab-step label="Welcome" duration="0">
+        <h2 is-upgraded>Services HOT Session: Quality Gates</h2>
+<p>Welcome to the second APAC Services Hands on Training session. This session will focus on <strong>quality gates</strong>.</p>
+<ul>
+<li>Recap of Yesterday</li>
+<li>What Next For Your Customer?</li>
+</ul>
+<p class="image-container"><img alt="ace logo" src="img\411c448a6932537c.png"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Prerequisites" duration="0">
+        <p>Please ensure:</p>
+<ul>
+<li>You can still login to your DT Managed environment</li>
+<li>You can SSH into your instance</li>
+<li>You have a <code>customer</code> tag working which tags the process groups and services accordingly for each customer</li>
+<li>Verify that you have consistent traffic to your customer services in Dynatrace</li>
+<li>Your Dynatrace API Token has the following permissions</li>
+</ul>
+<p class="image-container"><img alt="api token permissions" src="img\5052ffbd6ab534f1.png"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Agenda" duration="0">
+        <p>Today we will:</p>
+<ul>
+<li>Dynatrace SLO Capability vs. Keptn</li>
+<li>Explain and Install Keptn</li>
+<li>Define a Service Level Indicator using Dynatrace as the metric provider</li>
+<li>Define a Service Level Objective</li>
+<li>Create a quality gate with Keptn for a customer in their environment</li>
+<li>Receive quality evaluations for our customer environment</li>
+<li>Interact with Keptn via the CLI and API</li>
+<li>Use third party tooling (JIRA) to more easily consume our quality reports</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="How Today Will Run" duration="0">
+        <ul>
+<li>You will be working in groups but this is not a race or competition!</li>
+<li>I will be asking for <strong>group progress reports</strong>, not personal progress reports</li>
+<li>The training content will be available online to your group</li>
+<li>The session will <strong>not</strong> be recorded in case we share screens. I will record the session seperately</li>
+</ul>
+<h2 is-upgraded>Before Lunch</h2>
+<ul>
+<li>There will be a brief introduction section then we&#39;ll have a 10 minute break</li>
+<li>When we return, I will open the breakout rooms and assign you to groups</li>
+<li>In your group, you will work through the content at your own pace. <strong>COMMUNICATE AND HELP EACH OTHER!</strong></li>
+</ul>
+<h2 is-upgraded>Lunch</h2>
+<ul>
+<li>5 minutes before lunch I will recall everyone to the main room</li>
+<li><strong>As a group</strong> I&#39;ll ask you to tell me which slide number you&#39;re on so that I can judge progress</li>
+<li>Lunch will be at the halfway mark (2hrs after the start of the session). Lunch will be 30 minutes</li>
+</ul>
+<h2 is-upgraded>After Lunch</h2>
+<ul>
+<li>After lunch we will all meet in the main room. Teams that are further along can volunteer to assist teams who require assistance</li>
+<li>Everyone will return to their working groups &amp; continue working</li>
+<li><strong>If your group finishes</strong> please message me on Zoom / Slack / in person. I will join your room and we will discuss next steps</li>
+</ul>
+<h2 is-upgraded>Throughout the Day</h2>
+<ul>
+<li>I will be moving between the rooms to assist teams</li>
+<li>If your team is significantly ahead of others, I may ask you to assist other teams</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="What is a Quality Gate?" duration="0">
+        <p>A quality gate is a definition of quality that a piece of software should meet. If it does not meet the quality criteria, the software should not proceed and should be returned to the developer for a fix.</p>
+<p><strong>A quality gate should be a concrete, non-negotiable contract of quality for a given service.</strong></p>
+<p>A quality gate can combine many metrics that go to build up your <strong>quality signature</strong>. Your definition of &#34;quality&#34; is not restricted to performance metrics.</p>
+<ul>
+<li>Think: Apart from performance metrics, which other metrics could denote &#34;quality&#34;?</li>
+<li>Key Terms  <ul>
+<li>Service Level Indicator (SLI)</li>
+<li>Service Level Objective (SLO)</li>
+<li>Service Level Agreement (SLA)</li>
+<li>Error Budget</li>
+</ul>
+</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Dynatrace vs. Keptn" duration="0">
+        <h2 is-upgraded>Think: In Product vs. Open Source</h2>
+<h3 is-upgraded>- Production: In Product (SLO &amp; Error Budget tracking)</h3>
+<h3 is-upgraded>- CI/CD: Keptn (DT Supported version soon?)</h3>
+<p class="image-container"><img alt="dt-vs-keptn" src="img\32c6968fe559e37a.png"></p>
+<h2 is-upgraded>Dynatrace SLO screen</h2>
+<p class="image-container"><img alt="dynatrace-slo-screen" src="img\2fbbdb0a4c9fa753.png"></p>
+<p class="image-container"><img alt="ops-problem-meme" src="img\464023d7e2ed9c77.jpg"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="A Message About Quality Gates and Keptn" duration="0">
+        <p>Today we will be using Keptn to build quality gates but...</p>
+<h3 is-upgraded>⚠️ A Quality Gate does not <strong>require</strong> Keptn, but Keptn makes defining one easier</h3>
+<h3 is-upgraded>✔️ Tip: Discuss the concept and advantages of quality gates with customers. Don&#39;t focus on Keptn</h3>
+<h3 is-upgraded>✔️ Tip: Quality gates can (and should) encompass metrics from any tools (via Dynatrace?)</h3>
+<h3 is-upgraded>✔️ Tip: Quality gates are NOT only performance / availability based</h3>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Keptn" duration="0">
+        <p class="image-container"><img alt="keptn logo" src="img\2f3b628d64c35ec5.png"></p>
+<p>Think of Keptn as an intelligent middleware that receives events from your environment and passes those events to &#34;services&#34; which then react to those events.</p>
+<h2 is-upgraded>Think Events</h2>
+<p>It helps to think in terms of conceptual events and not specific tooling. Consider process of running and evaluating a quality gate:</p>
+<p>Assuming my service is deployed and I have traffic running against the service, I need to:</p>
+<ul>
+<li>Define the metrics I care about</li>
+<li>Define what the thresholds should be</li>
+<li>Define tool(s) I&#39;ll use to provide those metrics</li>
+<li>Have a way to receive an event (which tells the tool to start a quality evaluation)</li>
+<li>Have some mechanism that knows how to pull the metrics from particular tooling</li>
+<li>Pull the metrics from tools(s)</li>
+<li>Judge the retrieved metrics against my definition of quality</li>
+<li>Output a quality decision which defines what state my test was in (pass, warning or fail)</li>
+<li>React to that decision in some way</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Keptn&#39;s Bridge" duration="0">
+        <p>The bridge of a ship is the control room. The Keptn&#39;s bridge is your control room to oversee everything happening inside Keptn.</p>
+<p>Access your bridge by going to <code>http://keptn.VMIP.nip.io/bridge</code></p>
+<ul>
+<li>Bridge username: <code>keptn</code></li>
+<li>Bridge password: <code>dynatrace</code></li>
+</ul>
+<p class="image-container"><img alt="keptns bridge" src="img\9c859763b0dbd6f2.png"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Break #1" duration="0">
+        <p>Take a 10 minute break and we will get hands when we return.</p>
+<p>Hints for practical: All URLs, usernames and passwords are stored in <code>~/installOutput.txt</code></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Deploy SLI Provider" duration="0">
+        <p>Tell Keptn which tool it should use to retrieve Service Level Indicators (SLIs).</p>
+<p>Install the <code>dynatrace-sli-service</code>. Remove <code>https://</code> and any trailing slashes from <code>DT_TENANT</code>.</p>
+<p>Set some environment variables:</p>
+<pre><code>export DT_API_TOKEN=***
+export DT_TENANT=dtmanaged.dynatrace.training/e/***
+</code></pre>
+<p>Check that you&#39;ve set both of these correctly:</p>
+<pre><code>echo $DT_API_TOKEN
+echo $DT_TENANT
+</code></pre>
+<p>Now create the secret. Keptn will use these details to authenticate with Dynatrace.</p>
+<pre><code>kubectl -n keptn create secret generic dynatrace --from-literal=&#34;DT_API_TOKEN=$DT_API_TOKEN&#34; --from-literal=&#34;DT_TENANT=$DT_TENANT&#34;
+</code></pre>
+<p>Install the service:</p>
+<pre><code>kubectl apply -n keptn -f https://raw.githubusercontent.com/keptn-contrib/dynatrace-sli-service/0.7.1/deploy/service.yaml
+</code></pre>
+<p>Verify that the pod is running in the <code>keptn</code> namespace. Look for the <code>dynatrace-sli-service</code> pod:</p>
+<pre><code>kubectl get pods -n keptn
+</code></pre>
+<pre><code>NAME                                     READY   STATUS    RESTARTS   AGE
+...                                      ...     ...       ...        ...
+dynatrace-sli-service-595564cb65-xpx2j   2/2     Running   0          18s
+</code></pre>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Keptn Project, Service and Stage" duration="0">
+        <p>We need to model our customer system inside Keptn. Keptn has 3 levels of configuration:</p>
+<h2 is-upgraded>Project</h2>
+<p>The top level grouping. In our case, it makes sense to create one <code>project</code> per customer.</p>
+<h2 is-upgraded>Stage</h2>
+<p>This corresponds to our logical stages. Our customers have two stages: <code>staging</code> and <code>production</code></p>
+<h2 is-upgraded>Service</h2>
+<p>Typically this models the microservice. Our customers have one service in each environment: The <code>web</code> service.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Create Shipyard File" duration="0">
+        <p>Create a new file called <code>shipyard.yaml</code>. A shipyard file is the way that Keptn models the stages inside your project.</p>
+<p>In our case, we want one stage: <code>staging</code></p>
+<pre><code>stages:
+  - name: &#34;staging&#34;
+</code></pre>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Create Customer A Keptn Project" duration="0">
+        <p>Now create a Keptn project for <code>Customer A</code> and use the <code>shipyard</code> file you defined in the previous step:</p>
+<pre><code>keptn create project customer-a --shipyard=shipyard.yaml
+</code></pre>
+<pre><code>$ keptn create project customer-a --shipyard=shipyard.yaml
+...
+Starting to create project
+ID of Keptn context: ...
+Project customer-a created
+Stage staging created
+Project successfully created
+</code></pre>
+<p class="image-container"><img alt="customer-a-project" src="img\c42d2c4c17a2ec7c.png"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Create Service for Customer A" duration="0">
+        <p>Now we create our <code>staging-web</code> service for <code>customer-a</code>:</p>
+<pre><code>keptn create service staging-web --project=customer-a
+</code></pre>
+<pre><code>$ keptn create service staging-web --project=customer-a
+Starting to create service
+ID of Keptn context: ...
+Creating new Keptn service staging-web in stage staging
+</code></pre>
+<p class="image-container"><img alt="customer-a-project" src="img\5e768da84de2ad6c.png"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Keptn - Use Dynatrace for the customer-a project" duration="0">
+        <p>Tell Keptn to use the <code>dynatrace-sli-service</code> to receive metrics from Dynatrace for the <code>customer-a</code> project:</p>
+<pre><code>keptn configure monitoring dynatrace --project=customer-a
+</code></pre>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Metrics API v2" duration="0">
+        <p>Our quality gate will evaluate a single SLI:</p>
+<ul>
+<li>The 95th percentile response time for the relevant service (eg. <code>customer-a</code> in <code>staging</code>)</li>
+</ul>
+<p>First make sure you understand how this metric is pulled out of Dynatrace.</p>
+<p>Use the Dynatrace metrics API v2 to pull the 95th percentile figure for the web service in <code>staging</code> for <code>customer-a</code>.</p>
+<ul>
+<li>Navigate to <code>Settings &gt; Integration &gt; Dynatrace API &gt; Environment API v2</code></li>
+<li>Use the <code>Authorize</code> button with your Dynatrace API token</li>
+<li>Use the <code>Metrics</code> set of endpoints</li>
+<li>Open the <code>GET /metrics/query</code> dropdown</li>
+</ul>
+<p>Set the <code>metricSelector</code> to:</p>
+<pre><code>builtin:service.response.time:percentile(95)
+</code></pre>
+<p>Set the <code>entitySelector</code> to:</p>
+<pre><code>type(SERVICE),tag(customer:customer-a),tag([KUBERNETES]stage:staging)
+</code></pre>
+<pre><code>{
+  &#34;totalCount&#34;: 1,
+  &#34;nextPageKey&#34;: null,
+  &#34;result&#34;: [{
+      &#34;metricId&#34;: &#34;builtin:service.response.time:percentile(95)&#34;,
+      &#34;data&#34;: [{
+          &#34;dimensions&#34;: [ &#34;SERVICE-...&#34;],
+          &#34;timestamps&#34;: [
+            ...
+            1606888800000
+          ],
+          &#34;values&#34;: [
+            ...
+            837.3563350144964,
+            921.5641993975936
+          ]
+        }]
+    }]
+}
+</code></pre>
+<h2 is-upgraded>Validate</h2>
+<p>Navigate to your <code>customer-a</code> service in <code>staging</code> in Dynatrace and notice that the <code>SERVICE-*</code> ID matches the <code>dimension</code> in the REST API call. Proof that you&#39;ve pulled the metrics for the correct service.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Create &amp; Upload SLI File" duration="0">
+        <p>Store this metric as code so that we can tell Keptn to use it.</p>
+<p>Here we can use some special variables:</p>
+<ul>
+<li><code>$PROJECT</code> refers to the project name (in this case <code>customer-a</code>)</li>
+<li><code>$STAGE</code> refers to the Keptn stage (in this case <code>staging-web</code>)</li>
+</ul>
+<p>Create a new file called <code>sli.yaml</code>. Do not modify the content below:</p>
+<pre><code>---
+spec_version: &#39;1.0&#39;
+indicators:
+  response_time_p95: &#34;builtin:service.response.time:percentile(95)?scope=type(SERVICE),tag(customer:$PROJECT),tag([KUBERNETES]stage:$STAGE)&#34;
+</code></pre>
+<p>Add this SLI file to the relevant Keptn project and stage.</p>
+<ul>
+<li>The <code>--resource</code> parameter points to the <code>sli.yaml</code> file you created above.</li>
+<li>The <code>--resourceUri</code> must be set to <code>--resourceUri=dynatrace/sli.yaml</code> (Keptn is hardcoded to look for this value).</li>
+</ul>
+<h2 is-upgraded>Add File to Keptn</h2>
+<pre><code>keptn add-resource --project=customer-a --stage=staging --service=staging-web --resource=sli.yaml --resourceUri=dynatrace/sli.yaml
+</code></pre>
+<pre><code>$ keptn add-resource --project=customer-a --stage=staging --service=staging-web --resource=sli.yaml --resourceUri=dynatrace/sli.yaml
+Adding resource sli.yaml to service staging-web in stage staging in project customer-a
+Resource has been uploaded.
+</code></pre>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Create SLO Definition" duration="0">
+        <p>So far, we&#39;ve told Keptn:</p>
+<ul>
+<li>Where to look for metrics (the <code>dynatrace-sli-service</code>)</li>
+<li>Provided credentials to connect to the metrics provider (stored in the k8s secret)</li>
+<li>Provided Keptn with what our SLI definition (95th percentile response time)</li>
+</ul>
+<p>We <strong>haven&#39;t</strong> told Keptn:</p>
+<ul>
+<li>What <strong>good</strong> looks like for our SLI</li>
+</ul>
+<h2 is-upgraded>Create &amp; Upload SLO file</h2>
+<p>Create a new file called <code>slo.yaml</code> with the following content:</p>
+<pre><code>spec_version: &#39;1.0&#39;
+comparison:
+  compare_with: &#34;single_result&#34;
+  include_result_with_score: &#34;pass&#34;
+  aggregate_function: avg
+objectives:
+- sli: response_time_p95
+  pass:
+  - criteria:
+    - &#34;&lt;=+10%&#34;
+    - &#34;&lt;200&#34;
+  warning:
+  - criteria:
+    - &#34;&lt;=500&#34;
+total_score:
+  pass: &#34;90%&#34;
+  warning: &#34;50%&#34;
+</code></pre>
+<h2 is-upgraded>Add File to Keptn</h2>
+<p>Add a file to Keptn:</p>
+<pre><code>keptn add-resource --project=customer-a --stage=staging --service=staging-web --resource=slo.yaml --resourceUri=slo.yaml
+</code></pre>
+<p>You&#39;ll see a success message:</p>
+<pre><code>$ keptn add-resource --project=customer-a --stage=staging --service=staging-web --resource=slo.yaml --resourceUri=slo.yaml
+Adding resource slo.yaml to service staging-web in stage staging in project customer-a
+Resource has been uploaded.
+</code></pre>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Execute Evaluation" duration="0">
+        <p>Trigger an evaluation using the <code>keptn</code> command line:</p>
+<pre><code>keptn send event start-evaluation --project=customer-a --stage=staging --service=staging-web --timeframe=2m
+</code></pre>
+<p>Refresh the Keptn&#39;s bridge and notice that the evaluation is successful:</p>
+<p class="image-container"><img alt="first keptn evaluation" src="img\be519a35e54bbf4e.png"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Move Customer A to v2" duration="0">
+        <p>Time to push version 2 of our code to Customer A in <code>staging</code>.</p>
+<pre><code>kubectl set image -n customer-a deployment/staging-web front-end=adamgardnerdt/perform-demo-app:v2 --record
+</code></pre>
+<p>Refresh the customer-a staging URL and you should see a green banner.</p>
+<p class="image-container"><img alt="customer a staging v2" src="img\7096d56ee1a08e60.png"></p>
+<p>Notice that the page takes longer to load. There is a delay on this page. This delay will cause our quality gate to fail.</p>
+<p>Wait for a few minutes for Dynatrace to receive new data before progressing to the next step.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="New Quality Evaluation" duration="0">
+        <p>Request a new quality evaluation from Keptn. This time, it should fail because the page is taking too long to load.</p>
+<pre><code>keptn send event start-evaluation --project=customer-a --stage=staging --service=staging-web --timeframe=2m
+</code></pre>
+<p class="image-container"><img alt="failed build" src="img\6aae28eb61881a9b.png"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Keptn from Outside" duration="0">
+        <p>So far we&#39;ve relied on the <code>keptn</code> CLI to run evaluations. That&#39;s not usually the way things are done. More likely you will want to integrate Keptn into your shell scripts or build pipelines.</p>
+<p>For this, we have a few options but first we&#39;ll look at the API.</p>
+<p>Retrieve the Keptn API key:</p>
+<pre><code>kubectl get secret keptn-api-token -n keptn -ojsonpath={.data.keptn-api-token} | base64 --decode
+</code></pre>
+<p>For convenience, the demo system saves it for you in <code>~/installOutput.txt</code>:</p>
+<pre><code>cat ~/installOutput.txt
+</code></pre>
+<p>Navigate to the Keptn API page:</p>
+<pre><code>http://keptn.VMIP.nip.io/api
+</code></pre>
+<p>Authenticate with your token and experiment with the <code>GET</code> endpoints.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Request a New Evaluation via API" duration="0">
+        <p>Use the <code>evaluation</code> endpoint to request a new Keptn evaluation. This is the equivalent of this CLI command:</p>
+<pre><code>keptn send event start-evaluation --project=customer-a --stage=staging --service=staging-web --timeframe=2m
+</code></pre>
+<p>Your details will be:</p>
+<pre><code>project = customer-a
+stage = staging
+service = staging-web
+timeframe = 2m
+</code></pre>
+<p>The minimum payload body is:</p>
+<pre><code>{
+  &#34;timeframe&#34;: &#34;2m&#34;
+}
+</code></pre>
+<p>If you have an API utility such as Postman you can also try a <code>POST</code> request to:</p>
+<pre><code>http://keptn.YOURIP.nip.io/api/v1/project/PROJECTNAME/stage/STAGENAME/service/SERVICENAME/evaluation
+
+Header values:
+x-token: YOURKEPTNAPIKEY
+Content-Type: application/json
+</code></pre>
+<h2 is-upgraded>Record the <code>keptnContext</code></h2>
+<p>However you choose to call the Keptn API, you receive a <code>200 OK</code> response and a payload which contains a value called <code>keptnContext</code></p>
+<pre><code>{
+  &#34;keptnContext&#34;: &#34;ee4fb3ac-8a7b-48d2-bc35-a784fb1d4b43&#34;,
+  &#34;token&#34;: &#34;***&#34;
+}
+</code></pre>
+<p>Keptn will run the evaluation asynchronously. It may take some time to complete the evaluation so Keptn provides an ID by which you can retrieve your evaluation at a later time. <code>keptnContext</code> is that ID.</p>
+<h2 is-upgraded>Retrieve Evalation</h2>
+<p>Using the <code>Select a definition</code> dropdown, go to <code>mongodb-datastore</code> and use the <code>GET /event</code> with your Keptn Context to pull all events with that Keptn context.</p>
+<p>Notice that you receive multiple events. In fact, using only the Keptn context ID, you get the full Purepath of events which corresponds to what you see in the bridge.</p>
+<p>Every event in the chain shares the same Keptn Context. Use the context to grab a complete history of that &#34;chain of events&#34;:</p>
+<p class="image-container"><img alt="bridge events" src="img\182a2fa6dc5b818a.png"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Recap" duration="0">
+        <p>So far we have:</p>
+<ul>
+<li>Installed the Keptn tool</li>
+<li>Configured Keptn to pull metrics from an SLI provider (Dynatrace)</li>
+<li>Defined our project structure in Keptn (project, service and stage)</li>
+<li>Configured the metrics we care about (SLIs)</li>
+<li>Defined what &#34;quality&#34; means for those metrics (SLO)</li>
+<li>Used Keptn to execute evaluations and received our result (pass, warning or fail)</li>
+<li>Interacted with Keptn through the Command Line Interface (CLI) and the API.</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Keptn: Core vs. Services" duration="0">
+        <h2 is-upgraded>Keptn Core</h2>
+<p>As you know, Keptn is event based. For the purposes of this session, you can consider Keptn&#39;s core to be responsible for receiving and placing events onto a topic in a publisher / subscriber type model.</p>
+<p>These events can then be used by Keptn&#39;s services.</p>
+<p>All possible events are listed <a href="https://github.com/keptn/spec/blob/master/cloudevents.md" target="_blank">here</a></p>
+<h2 is-upgraded>Keptn Services</h2>
+<p>Keptn services are additional pieces of functionality (think of them like apps) that listen for one (or more) events, react to those events and (optionally) emit events.</p>
+<p>Anyone can create new Keptn services.</p>
+<h3 is-upgraded>Basic Workflow Example</h3>
+<p class="image-container"><img alt="keptn-services-basic" src="img\eb99b748321ced88.png"></p>
+<h3 is-upgraded>Complex Workflow Example</h3>
+<p class="image-container"><img alt="keptn-services-complex" src="img\b80b82e3c29fa6f0.png"></p>
+<p>For example, when we ask Keptn to start an evaluation, we send the following event: <code>sh.keptn.event.start-evaluation</code></p>
+<p>Keptn services that are configured to listen for that event can then react.</p>
+<p>Keptn&#39;s service architecture makes it completely flexible in terms of what happens and when.</p>
+<h2 is-upgraded>Out of the Box Services</h2>
+<p>You have already been using Keptn services - some are installed for you by default. Look again at an evaluation in Keptn&#39;s bridge. Notice that there are a number of services already mentioned:</p>
+<p class="image-container"><img alt="ootb keptn services" src="img\67a979482096d9c5.png"></p>
+<p>Take a look at what&#39;s already installed with:</p>
+<pre><code>kubectl get deployments -n keptn
+</code></pre>
+<p>Here are mine:</p>
+<pre><code>NAME                       READY   UP-TO-DATE   AVAILABLE   AGE
+bridge                     1/1     1            1           47h
+dynatrace-sli-service      1/1     1            1           45h
+eventbroker-go             1/1     1            1           47h
+api-service                1/1     1            1           47h
+api-gateway-nginx          1/1     1            1           47h
+mongodb                    1/1     1            1           47h
+lighthouse-service         1/1     1            1           47h
+shipyard-service           1/1     1            1           47h
+mongodb-datastore          1/1     1            1           47h
+remediation-service        1/1     1            1           47h
+configuration-service      1/1     1            1           47h
+</code></pre>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Extend Keptn" duration="0">
+        <p>We have now interacted with Keptn via the CLI and the API. But a more realistic scenario would be:</p>
+<ul>
+<li>A developer requests an evaluation using some tool (shell script, pipeline run etc.)</li>
+<li>Keptn evaluates the code and generates an evaluation result</li>
+<li>The developer wishes to be notified and consume the results of this evaluation in a tool of her / his choosing</li>
+</ul>
+<h2 is-upgraded>Discuss: How could we achieve this?</h2>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Push Performance Evaluations into JIRA" duration="0">
+        <p>Our developer has decided that they want JIRA tickets for each evaluation. We&#39;ve looked and found a Keptn service which does just that: the <a href="https://github.com/keptn-sandbox/jira-service" target="_blank">JIRA Service</a>.</p>
+<p>💡 You will need a free trial JIRA account to proceed. Sign up <a href="https://www.atlassian.com/try/cloud/signup?bundle=jira-software&edition=free" target="_blank">here</a></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Setup JIRA Instance" duration="0">
+        <ul>
+<li>Login to JIRA and setup your account. You can skip all the optional questions and invites.</li>
+<li>Choose an ID. This will form part of your URL: <code>https://YOURID.atlassian.net</code></li>
+<li>When asked to create a project, make a note of your project key</li>
+<li>Create a <code>Kanban</code> type project</li>
+<li>Generate a JIRA API Key <a href="https://id.atlassian.com/manage/api-tokens" target="_blank">generate one here</a></li>
+</ul>
+<p>By now you should know:</p>
+<ul>
+<li>Your JIRA username (the email address you signed up with)</li>
+<li>Your JIRA URL (no trailing slash!): <code>https://SOMETHING.atlassian.net</code></li>
+<li>Your project Key. If you&#39;ve forgotten it&#39;s in the URL too.</li>
+<li>Your Keptn base URL is (no trailing slash): <code>http://keptn.VMIP.nip.io</code></li>
+<li>Your Keptn bridge URL is (no trailing slash): <code>http://keptn.VMIP.nip.io/bridge</code></li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Install Keptn JIRA Service" duration="0">
+        <p>Follow the instructions on the <a href="https://github.com/keptn-sandbox/jira-service#gather-jira-information" target="_blank">JIRA Service readme</a>.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Run an Evaluation" duration="0">
+        <p>Ask Keptn for an evaluation, either via the API or CLI.</p>
+<pre><code>keptn send event start-evaluation --project=customer-a --stage=staging --service=staging-web --timeframe=2m
+</code></pre>
+<p>You can check the progress of the evaluation with:</p>
+<pre><code>keptn get event evaluation-done --keptn-context ***
+</code></pre>
+<h2 is-upgraded>JIRA Results</h2>
+<p>When your evaluation is completed, refresh the JIRA board and you should see a new ticket in your backlog.</p>
+<p class="image-container"><img alt="jira ticket" src="img\c10d3d2d8adf2ed9.png"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="🎉 Congratulations" duration="0">
+        <p>You&#39;ve successfully created a quality gate as code and</p>
+<h2 is-upgraded>Do you have any thoughts, ideas, comments or questions?</h2>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Bonus Content" duration="0">
+        <p>Here are some ideas to extend your research:</p>
+<ul>
+<li>Onboard customers B &amp; C to Keptn</li>
+<li>Extend the quality gate to use additional / different metrics</li>
+<li>Use different metrics per customer</li>
+<li>Receive Dynatrace Events for Quality Gate results</li>
+</ul>
+<p>Useful Links:</p>
+<ul>
+<li><a href="https://sre.google" target="_blank">Google&#39;s SRE Site</a></li>
+<li><a href="https://sre.google/books/" target="_blank">Google&#39;s SRE Books</a></li>
+<li><a href="https://keptn.sh" target="_blank">Keptn.sh</a></li>
+<li><a href="https://tutorials.keptn.sh" target="_blank">Keptn Tutorials</a></li>
+</ul>
+
+
+      </google-codelab-step>
+    
+  </google-codelab>
+
+  <script src="https://storage.googleapis.com/codelab-elements/native-shim.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/custom-elements.min.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/prettify.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/codelab-elements.js"></script>
+  <script src="//support.google.com/inapp/api.js"></script>
+
+</body>
+</html>

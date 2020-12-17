@@ -1,0 +1,19 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "https://storage.googleapis.com",
+  "mainga": "UA-49880327-14",
+  "updated": "2020-12-10T15:00:25+10:00",
+  "id": "qualitygates",
+  "duration": 0,
+  "title": "HOT Session: Quality Gates",
+  "summary": "APAC Services HOT Session: Quality Gates",
+  "source": "2-qualitygates.md",
+  "theme": "",
+  "status": [
+    "published"
+  ],
+  "category": null,
+  "tags": [],
+  "url": "qualitygates"
+}
