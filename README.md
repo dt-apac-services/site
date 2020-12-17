@@ -19,4 +19,6 @@ All training content and tutorials for the Dynatrace APAC Services team will be 
 
 Any Dynatrace APAC employee is welcome to add links, tutorials, hints or tips to this site.
 
+This site and all tutorials are written in Markdown. If you can write Markdown, you can contribute.
+
 If you're a Dynatrace employee, please ask your manager for write access to the [underlying GitHub organisation](https://github.com/dt-apac-services).
