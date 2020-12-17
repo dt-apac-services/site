@@ -1,0 +1,19 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "https://storage.googleapis.com",
+  "mainga": "UA-49880327-14",
+  "updated": "2020-12-17T13:01:13+10:00",
+  "id": "mac",
+  "duration": 0,
+  "title": "HOT Session: Monitoring as Code",
+  "summary": "APAC Services HOT Session: Monitoring as Code",
+  "source": "1-mac.md",
+  "theme": "",
+  "status": [
+    "published"
+  ],
+  "category": null,
+  "tags": [],
+  "url": "mac"
+}
