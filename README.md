@@ -14,7 +14,7 @@ All training content and tutorials for the Dynatrace APAC Services team will be 
 - [SRE Books (Free Reads)](https://sre.google/books/)
 
 
-## Contributing
+### Contributing
 
 Any Dynatrace APAC employee is welcome to add links, tutorials, hints or tips to this site.
 
