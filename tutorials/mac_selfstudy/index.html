@@ -1,0 +1,109 @@
+
+<!doctype html>
+
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  <meta charset="UTF-8">
+  <title>Monitoring as Code: Self Study</title>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
+  <style>
+    .success {
+      color: #1e8e3e;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+  <google-codelab codelab-gaid=""
+                  id="mac_selfstudy"
+                  title="Monitoring as Code: Self Study"
+                  environment="web"
+                  feedback-link="">
+    
+      <google-codelab-step label="Welcome" duration="0">
+        <h2 is-upgraded>Monitoring as Code Self Study</h2>
+<p>Before attempting this tutorial, you should have attempted and be comfortable with <a href="/site/tutorials/mac" target="_blank">the guided vHOT session</a>.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Prerequisites" duration="0">
+        <p>👉 You must have a Kubernetes cluster available. The cluster must have at least 1vCPU and 4GB RAM.</p>
+<p>👉 This guide will work on any cloud provider, but cluster creation instructions are only given for Google Cloud.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="DT Hipster Shop &amp; Architecture" duration="0">
+        <p>You will first create a kubernetes cluster. Then deploy an application onto the cluster called &#34;Hipster Shop&#34;.</p>
+<p>This application is a modified version of Google&#39;s Hipster Shop. The application is available on HTTP port 80.</p>
+<p class="image-container"><img alt="dt hipster shop" src="img\8eb80329a3cfd380.png"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Cluster Creation" duration="0">
+        <p>Open your Google cloud shell and clone this repo: <code>https://github.com/dt-services-apac/macselfstudy</code></p>
+<p>Modify the <code>~/macselfstudy/createCluster.sh</code> and set your cluster name on line 1. <strong>DO NOT MODIFY ANYTHING ELSE</strong>.</p>
+<p>Add the executable flag to the <code>~/macselfstudy/createCluster.sh</code> file and run the shell script to create your cluster.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Deploy DT Hipster Shop" duration="0">
+        <p>Once the cluster is operational, deploy the application into the <code>default</code> namespace using <code>~/macselfstudy/shop.yaml</code></p>
+<pre><code>adam_gardner@cloudshell:~ (dxs-apac)$ kubectl get pods
+NAME                                     READY   STATUS    RESTARTS   AGE
+adservice-55c5c664d8-lx6lb               1/1     Running   0          17m
+cartservice-5ddc6bbb6c-grhnh             1/1     Running   0          17m
+checkoutservice-5ddb9f689b-k9m49         1/1     Running   0          18m
+currencyservice-6d848bc488-hptjd         1/1     Running   0          17m
+emailservice-576b4f5648-m2d8r            1/1     Running   0          18m
+frontend-6869df7cff-d58d7                1/1     Running   0          18m
+frontend-proxy-75c88c4f75-vmzsg          1/1     Running   0          18m
+loadgenerator-7f7fb4b896-nzn9g           1/1     Running   0          17m
+paymentservice-84dff89b56-k5n47          1/1     Running   0          18m
+productcatalogservice-6b5cc4fd8b-swkl4   1/1     Running   0          17m
+recommendationservice-56b4c48c54-9zsm7   1/1     Running   0          18m
+redis-cart-77d694dd7-8p6zp               1/1     Running   0          17m
+shippingservice-79dcbc4794-69xqf         1/1     Running   0          17m
+</code></pre>
+<p>Once all pods are running, Google will automatically create an external load balancer and IP address for you.</p>
+<p>You will be able to access the application using the external IP address from the <code>frontend-proxy</code> service.</p>
+<p>Note: The Hipster shop takes some time to come online, you may see the following error. <strong>Just wait a few moments, it&#39;ll resolve once the application starts properly.</strong></p>
+<p class="image-container"><img alt="cart error" src="img\d33f86ae5dc53a5b.png"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Hipster Shop is Running" duration="0">
+        <p>Your hipster shop should now be running:</p>
+<p class="image-container"><img alt="dt hipster shop running" src="img\312e3d261597e708.png"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Scenario" duration="0">
+        <p>Imagine Hipster shop is your customer&#39;s website. The task is to configure the hipster shop using <a href="https://github.com/dynatrace-oss/dynatrace-monitoring-as-code" target="_blank">Dynatrace Monaco</a>.</p>
+<p>Treat this as a real exercise and build whatever configuration you would at a customer site.</p>
+
+
+      </google-codelab-step>
+    
+  </google-codelab>
+
+  <script src="https://storage.googleapis.com/codelab-elements/native-shim.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/custom-elements.min.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/prettify.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/codelab-elements.js"></script>
+  <script src="//support.google.com/inapp/api.js"></script>
+
+</body>
+</html>

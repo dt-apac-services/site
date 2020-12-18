@@ -1,0 +1,19 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "https://storage.googleapis.com",
+  "mainga": "UA-49880327-14",
+  "updated": "2020-12-19T08:47:35+10:00",
+  "id": "mac_selfstudy",
+  "duration": 0,
+  "title": "Monitoring as Code: Self Study",
+  "summary": "Monitoring as Code: Self Study",
+  "source": "3-macselfstudy.md",
+  "theme": "",
+  "status": [
+    "published"
+  ],
+  "category": null,
+  "tags": [],
+  "url": "mac_selfstudy"
+}
