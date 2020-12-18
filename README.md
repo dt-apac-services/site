@@ -4,8 +4,8 @@ All training content and tutorials for the Dynatrace APAC Services team will be 
 
 ### Tutorials
 
-- [Monitoring as Code vHOT](tutorials/mac/)
-- [Quality Gates vHOT](tutorials/qualitygates/)
+- [Monitoring as Code (vHOT)](tutorials/mac/)
+- [Quality Gates (vHOT)](tutorials/qualitygates/)
 - [Self Study: Monitoring as Code](tutorials/mac_selfstudy/)
 
 ### DevOps / Site Reliability Engineering
