@@ -51,7 +51,8 @@
     
       <google-codelab-step label="Cluster Creation" duration="0">
         <p>Open your Google cloud shell and clone this repo: <code>https://github.com/dt-apac-services/macselfstudy</code></p>
-<p>Add the executable flag to the <code>~/macselfstudy/createCluster.sh</code> file and run the shell script to create your cluster:</p>
+<p>Add the executable flag to the <code>~/macselfstudy/createCluster.sh</code> file and run the shell script to create your cluster.</p>
+<p>The <code>GCP_PROJECT</code> value can be retrieved from the URL of the Kubernetes overview page. eg. <code>https://console.cloud.google.com/kubernetes/list?authuser=0&amp;project=dxs-apac</code></p>
 <pre><code>chmod +x ~/macselfstudy/createCluster.sh
 GCP_PROJECT=*** CLUSTER_NAME=*** ~/macselfstudy/createCluster.sh
 </code></pre>
