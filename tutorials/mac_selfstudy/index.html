@@ -18,11 +18,6 @@
       color: red;
     }
   </style>
-  <script>
-  window.addEventListener('DOMContentLoaded', (event) => {
-    document.getElementById("arrow-back").setAttribute("href", "https://dt-apac-services.github.io/site");
-  });
-  </script>
 </head>
 <body>
   <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
@@ -55,9 +50,11 @@
       </google-codelab-step>
     
       <google-codelab-step label="Cluster Creation" duration="0">
-        <p>Open your Google cloud shell and clone this repo: <code>https://github.com/dt-services-apac/macselfstudy</code></p>
-<p>Modify the <code>~/macselfstudy/createCluster.sh</code> and set your cluster name on line 1. <strong>DO NOT MODIFY ANYTHING ELSE</strong>.</p>
-<p>Add the executable flag to the <code>~/macselfstudy/createCluster.sh</code> file and run the shell script to create your cluster.</p>
+        <p>Open your Google cloud shell and clone this repo: <code>https://github.com/dt-apac-services/macselfstudy</code></p>
+<p>Add the executable flag to the <code>~/macselfstudy/createCluster.sh</code> file and run the shell script to create your cluster:</p>
+<pre><code>chmod +x ~/macselfstudy/createCluster.sh
+CLUSTER_NAME=*** ~/macselfstudy/createCluster.sh
+</code></pre>
 
 
       </google-codelab-step>
