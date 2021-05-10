@@ -7,7 +7,6 @@ All training content and tutorials for the Dynatrace APAC Services team will be 
 - [Monitoring as Code (vHOT)](tutorials/mac/)
 - [Quality Gates (vHOT)](tutorials/qualitygates/)
 - [Self Study: Monitoring as Code](tutorials/mac_selfstudy/)
-- [OpenTelemetry Demo](https://github.com/dt-apac-services/opentelemetry-demo)
 
 ### DevOps / Site Reliability Engineering
 
