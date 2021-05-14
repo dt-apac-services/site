@@ -53,8 +53,9 @@
         <p>Open your Google cloud shell and clone this repo: <code>https://github.com/dt-apac-services/macselfstudy</code></p>
 <p>Add the executable flag to the <code>~/macselfstudy/createCluster.sh</code> file and run the shell script to create your cluster.</p>
 <p>The <code>GCP_PROJECT</code> value can be retrieved from the URL of the Kubernetes overview page. eg. <code>https://console.cloud.google.com/kubernetes/list?authuser=0&amp;project=dxs-apac</code></p>
+        <p>Your cluster will be tagged with <code>Owner: $USERNAME</code>. <code>USERNAME</code> must be without spaces (underscores are accepted</p>
 <pre><code>chmod +x ~/macselfstudy/createCluster.sh
-GCP_PROJECT=*** CLUSTER_NAME=*** ~/macselfstudy/createCluster.sh
+GCP_PROJECT=*** CLUSTER_NAME=my_cluster_1 USERNAME=joe_bloggs ~/macselfstudy/createCluster.sh
 </code></pre>
 
 
