@@ -1,10 +1,12 @@
 # Create a Quality Check
 
+![image](https://user-images.githubusercontent.com/76087882/128972554-1ef85987-2e67-4553-97a5-12f5f4341aca.png)
+
 Use these instructions to create a production quality check.
 
 This quality check is designed to start the conversation with customers around our ACE practices.
 
-Once an hour this quality check will produce a report of production response times. This can be used as a conversation starter your customer to suggest that they use this information to inform their preproduction to production quality gate. We have taken the guess work out of their thresholds and they can now implement quality gates in preproduction based on this information.
+Once an hour this quality check will produce a report of production response times. This can be used as a conversation starter at your customer accounts to suggest that they use this information to inform their preproduction to production quality gate. We have taken the guess work out of their thresholds and they can now implement quality gates in preproduction based on this information.
 
 ## Conditions & Warnings
 By proceeding, you agreed to the following warnings and conditions:
