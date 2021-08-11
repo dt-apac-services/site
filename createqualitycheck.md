@@ -12,10 +12,10 @@ Once an hour this quality check will produce a report of production response tim
 By proceeding, you agreed to the following warnings and conditions:
 
 1. The capability provided here is as a PoC instrument / conversation starter at your customers only
-1. Customers should not be given direct access to this PoC capability / UI. It is you **internal** use only
-1. If a customer wants to do this properly in their account, please reach out to the Innovation lead in your geo
-1. Your quality gate will stop evaluating after **3 days**. The historic data, however, will remain
-1. You understand that the capability provided here is for your use only
+1. Customers should not be given direct access to this PoC capability / UI. It is for your **internal** use only
+1. Screenshots of the quality evaluations can (and should) be shared with the customer
+3. If a customer requires this capability, please reach out to the Innovation lead in your geo
+4. Evaluations will stop after **3 days**. The historic data, however, will remain
 
 ## 1. Create a Dashboard
 Create a new dashboard on your tenant. Add only one metric per tile. Add a maximum of `3` tiles. It is recommended to use calculated service metrics.
