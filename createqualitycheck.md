@@ -51,4 +51,4 @@ Gather the following details:
 
 # 5. Submit Details
 
-Send an email to `adam.gardner@dynatrace.com`. Your quality gate will be created and you will receive login information within one business day.
+Send an email to `services.apac@dynatrace.com`. Your quality gate will be created and you will receive login information within one business day.
