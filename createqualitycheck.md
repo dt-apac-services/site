@@ -11,16 +11,15 @@ Once an hour this quality check will produce a report of production response tim
 ## Conditions & Warnings
 By proceeding, you agreed to the following warnings and conditions:
 
+1. Use existing metrics in a customer environment. Creating calculated service metrics will consume DDU.
 1. The capability provided here is as a PoC instrument / conversation starter at your customer(s) only
 1. Customers should not be given direct access to this PoC capability / UI. It is for your **internal** use only
 1. Screenshots of the quality evaluations can (and should) be shared with the customer
-3. If a customer requires this capability, please reach out to the Innovation lead in your geo
-4. Evaluations will stop after **7 days**. The historic data, however, will remain
+1. If a customer requires this capability, please reach out to the Innovation lead in your geo
+1. Evaluations will stop after **7 days**. The historic data, however, will remain
 
 ## 1. Create a Dashboard
 Create a new dashboard on your tenant. Add only one metric per tile. Add a maximum of `3` tiles. It is recommended to use calculated service metrics.
-
-**IMPORTANT: Use existing metrics available in teh customer environment. Creating new calculated service metrics will consume DDU in the customer environment.**
 
 For each tile, set the title to be: `sli={metricname}` like this:
 
