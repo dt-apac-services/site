@@ -20,6 +20,8 @@ By proceeding, you agreed to the following warnings and conditions:
 ## 1. Create a Dashboard
 Create a new dashboard on your tenant. Add only one metric per tile. Add a maximum of `3` tiles. It is recommended to use calculated service metrics.
 
+**IMPORTANT: Use existing metrics available in teh customer environment. Creating new calculated service metrics will consume DDU in the customer environment.**
+
 For each tile, set the title to be: `sli={metricname}` like this:
 
 ![image](https://user-images.githubusercontent.com/76087882/128966704-e682bd85-4fe4-409a-b93d-4f52c92b75e6.png)
