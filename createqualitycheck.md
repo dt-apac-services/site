@@ -4,18 +4,18 @@
 
 Use these instructions to create a production quality check.
 
-This quality check is designed to start the conversation with customers around our ACE practices.
+This quality check is designed to start the conversation with customers around our Innovation practices.
 
 Once an hour this quality check will produce a report of production response times. This can be used as a conversation starter at your customer accounts to suggest that they use this information to inform their preproduction to production quality gate. We have removed the guess work. They can now implement quality gates in preproduction based on this information.
 
 ## Conditions & Warnings
 By proceeding, you agreed to the following warnings and conditions:
 
-1. The capability provided here is as a PoC instrument / conversation starter at your customers only
+1. The capability provided here is as a PoC instrument / conversation starter at your customer(s) only
 1. Customers should not be given direct access to this PoC capability / UI. It is for your **internal** use only
 1. Screenshots of the quality evaluations can (and should) be shared with the customer
 3. If a customer requires this capability, please reach out to the Innovation lead in your geo
-4. Evaluations will stop after **3 days**. The historic data, however, will remain
+4. Evaluations will stop after **7 days**. The historic data, however, will remain
 
 ## 1. Create a Dashboard
 Create a new dashboard on your tenant. Add only one metric per tile. Add a maximum of `3` tiles. It is recommended to use calculated service metrics.
