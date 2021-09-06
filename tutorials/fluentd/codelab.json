@@ -1,0 +1,25 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "https://storage.googleapis.com",
+  "mainga": "UA-49880327-14",
+  "updated": "2021-09-06T17:14:28+10:00",
+  "id": "fluentd-tutorial",
+  "duration": 0,
+  "title": "fluentd-demo",
+  "authors": "Adam Gardner",
+  "summary": "FluentD Hands On Tutorial",
+  "source": "fluentd-tutorial/fluentdtutorial.md",
+  "theme": "",
+  "status": [
+    "published"
+  ],
+  "category": [
+    "fluentdf"
+  ],
+  "tags": [
+    "fluentd"
+  ],
+  "feedback": "https://dt-apac-services.github.io/site/",
+  "url": "fluentd-tutorial"
+}
