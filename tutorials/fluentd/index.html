@@ -27,38 +27,118 @@
                   environment="web"
                   feedback-link="https://dt-apac-services.github.io/site/">
     
+      <google-codelab-step label="Overview" duration="0">
+        <p>Getting started with Dynatrace Generic Log Ingestion with <a href="https://fluentd.org" target="_blank">fluentd</a>.</p>
+<p>Generic log ingestion is currently <strong>only</strong> available for Dynatrace SaaS.</p>
+<p><strong>This tutorial will not work with Managed.</strong></p>
+
+
+      </google-codelab-step>
+    
       <google-codelab-step label="Architecture" duration="0">
-        <p class="image-container"><img alt="fluentd dynatrace architecture" src="img\\956ce62a7610732b.png">  </p>
+        <p>You will install the fluentd service on your laptop. This will read a log file and communicate to an ActiveGate.</p>
+<p>Log lines will be pushed to the ActiveGate and then to your Dynatrace SaaS tenant.</p>
+<p class="image-container"><img alt="fluentd dynatrace architecture" src="img\\956ce62a7610732b.png"></p>
 
 
       </google-codelab-step>
     
       <google-codelab-step label="Overview" duration="0">
-        <p>In this demo scenario fluentd will be installed as a service on your laptop. An environment ActiveGate will be installed. This can either be installed on a standalone VM (eg. in the cloud) or on your local machine. Fluentd will be configured to send it&#39;s output to the ActiveGate API endpoint.  The Fluentd service will watch the log file you specify, parse each log line as it is written and push that log line up to Dynatrace (via the ActiveGate).  </p>
+        <p>In this demo scenario fluentd will be installed as a service on your laptop. An environment ActiveGate will be installed.</p>
+<p>This can either be installed on a standalone VM (eg. in the cloud) or on your local machine.</p>
+<p>Fluentd will be configured to send it&#39;s output to the ActiveGate API endpoint.</p>
+<p>The Fluentd service will watch the log file you specify, parse each log line as it is written and push that log line up to Dynatrace (via the ActiveGate).</p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="Step 1: Create Log Ingest Token" duration="0">
-        <p>Create a Dynatrace API token with <code>Ingest Logs</code> permissions  </p>
+      <google-codelab-step label="Create Log Ingest Token" duration="0">
+        <p>Create a Dynatrace API token with <code>Ingest Logs</code> permissions</p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="Step 2: Install ActiveGate" duration="0">
-        <p> Install a standard environment ActiveGate either on your laptop or a cloud VM. If installing on a cloud VM, ensure that port <code>9999</code> is open on the ActiveGate. Fluentd will need to send data from your laptop to the REST API on this ActiveGate.  Check that the <strong>log monitoring</strong> module is enabled (it should be by default):  <img alt="log monitoring enabled" src="img\\ebe429c3bcb7e402.png">  </p>
+      <google-codelab-step label="Install ActiveGate" duration="0">
+        <p>Install a standard environment ActiveGate either on your laptop or a cloud VM. If installing on a cloud VM, ensure that port <code>9999</code> is open on the ActiveGate. Fluentd will need to send data from your laptop to the REST API on this ActiveGate.</p>
+<p>Check that the <strong>log monitoring</strong> module is enabled (it should be by default):</p>
+<p class="image-container"><img alt="log monitoring enabled" src="img\\ebe429c3bcb7e402.png"></p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="Step 3: Install fluentd" duration="0">
-        <p> Install fluentd on your laptop.  </p>
-<ol type="1">
+      <google-codelab-step label="Install fluentd" duration="0">
+        <p>Install fluentd on your laptop.</p>
+<ul>
 <li>Download and install the <a href="https://www.fluentd.org/download" target="_blank">windows msi</a></li>
-<li>Ensure the fluentd windows service is running  <img alt="fluentd service running" src="img\\59dcd88c28d29af3.png">  </li>
-<li>Open the td-agent command prompt (not standard CMD window) as administrator  <img alt="td agent cmd" src="img\\21dc824e15cffc06.png">  </li>
-<li>Install the Dynatrace fluentd plugin: <code>td-agent-gem install fluent-plugin-dynatrace</code>    Step 4: Create Log File   Create an empty log file in any location you want. Make a note of the location as you&#39;ll need it later.    Step 5: Configure fluentd   Open <code>C:\opt\td-agent\etc\td-agent\td-agent.conf</code> in a notepad as an administrator.  Place the following content at the bottom of the file.  Note: The <code>*.log.pos</code> file doesn&#39;t have to exist. fluentd will create it for you.  <br><code><source><br>@type tail<br>path C:/path/to/your/log/file.log<br>pos_file C:/path/to/your/log/file.log.pos<br>tag first.*<br><parse><br>@type regexp<br>  expression /^\[(?<time>[^\]]+)\] (?<loglevel>[^\s]+) (?<payload>.+)$/<br></parse><br></source><br><br><match first.**><br>@type              dynatrace<br>active_gate_url    https://ACTIVEGATE_IP:9999/e/DT_TENANT_ID/api/v2/logs/ingest<br>api_token          dt0c01.***<br>ssl_verify_none    true<br></match></code><br>    Step 6: Restart FluentD    Restart the fluentd Windows service so it picks up your changes.    Step 7: Write log file lines    Copy and paste these lines into your log file. Saving after each line.  <br><code>[2021-09-06 10:00:00 AEST] INFO This is my first log line...<br>[2021-09-06 10:00:01 AEST] INFO This is my second log line...<br>[2021-09-06 10:00:02 AEST] INFO This is my third log line...<br>[2021-09-06 10:00:03 AEST] INFO This is my fourth log line...<br>[2021-09-06 10:00:04 AEST] INFO This is my fifth log line...<br>[2021-09-06 10:00:05 AEST] INFO This is my sixth log line...<br>[2021-09-06 10:00:06 AEST] INFO This is my seventh log line...<br></code></li>
-</ol>
+<li>Ensure the fluentd windows service is running</li>
+</ul>
+<p class="image-container"><img alt="fluentd service running" src="img\\59dcd88c28d29af3.png"></p>
+<ul>
+<li>Open the td-agent command prompt (not standard CMD window) as administrator</li>
+</ul>
+<p class="image-container"><img alt="td agent cmd" src="img\\21dc824e15cffc06.png"></p>
+<ul>
+<li>Install the Dynatrace fluentd plugin: <code>td-agent-gem install fluent-plugin-dynatrace</code></li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Create Log File" duration="0">
+        <p>Create an empty log file in any location you want. Make a note of the location as you&#39;ll need it later.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Configure fluentd" duration="0">
+        <p>Open <code>C:\opt\td-agent\etc\td-agent\td-agent.conf</code> in a notepad as an administrator.</p>
+<p>Place the following content at the bottom of the file.</p>
+<p>Note: The <code>*.log.pos</code> file doesn&#39;t have to exist. fluentd will create it for you.</p>
+<pre><code>&lt;source&gt;
+  @type tail
+  path C:/path/to/your/log/file.log
+  pos_file C:/path/to/your/log/file.log.pos
+  tag first.*
+  &lt;parse&gt;
+    @type regexp
+	  expression /^\[(?&lt;time&gt;[^\]]+)\] (?&lt;loglevel&gt;[^\s]+) (?&lt;payload&gt;.+)$/
+  &lt;/parse&gt;
+&lt;/source&gt;
+
+&lt;match first.**&gt;
+  @type              dynatrace
+  active_gate_url    https://ACTIVEGATE_IP:9999/e/DT_TENANT_ID/api/v2/logs/ingest
+  api_token          dt0c01.***
+  ssl_verify_none    true
+&lt;/match&gt;
+</code></pre>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Restart FluentD" duration="0">
+        <p>Restart the fluentd Windows service so it picks up your changes.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Write log file lines" duration="0">
+        <p>Copy and paste these lines into your log file. Saving after each line.</p>
+<pre><code>[2021-09-06 10:00:00 AEST] INFO This is my first log line...
+[2021-09-06 10:00:01 AEST] INFO This is my second log line...
+[2021-09-06 10:00:02 AEST] INFO This is my third log line...
+[2021-09-06 10:00:03 AEST] INFO This is my fourth log line...
+[2021-09-06 10:00:04 AEST] INFO This is my fifth log line...
+[2021-09-06 10:00:05 AEST] INFO This is my sixth log line...
+[2021-09-06 10:00:06 AEST] INFO This is my seventh log line...
+</code></pre>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="See Results in Dynatrace" duration="0">
+        <p>Navigate to the Logs screen and wait a few moments. After a while, your log lines will appear.</p>
+<p class="image-container"><img alt="logs in dynatrace" src="img\\3a250df6e64e7bf7.png"></p>
 
 
       </google-codelab-step>
