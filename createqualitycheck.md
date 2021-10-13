@@ -18,38 +18,23 @@ By proceeding, you agree to the following warnings and conditions:
 1. If a customer requires this capability, please reach out to the Innovation lead in your geo.
 1. Evaluations will stop after **7 days**. The historic data, however, will remain.
 
-## 1. Create a Dashboard
-Create a new dashboard on your tenant. Add only one metric per tile. Add a maximum of `3` tiles. It is recommended to use calculated service metrics.
+## 1. Create a Dynatrace API Token
 
-For each tile, set the title to be: `sli={metricname}` like this:
+Create an API token with API v2 permissions `Read Metrics`
 
-![image](https://user-images.githubusercontent.com/76087882/128966704-e682bd85-4fe4-409a-b93d-4f52c92b75e6.png)
+![image](https://user-images.githubusercontent.com/76087882/137074707-8199c68e-c6d8-40ad-8097-f3c3990775b8.png)
 
-## 2. Dashboard ID
 
-Save the dashboard ID from the URL. Here the ID is: `3ccb5be7-4911-497a-a514-cd8ae2beb650`
-
-![image](https://user-images.githubusercontent.com/76087882/128966811-cb9e5943-84a9-402a-8181-53dbb336315e.png)
-
-## 3. Create a Dynatrace API Token
-
-Create an API token with two permissions:
-
-1. Read Metrics
-2. Read Configuration
-
-![image](https://user-images.githubusercontent.com/76087882/128966956-f41438e0-98f7-4612-b035-5a2ca3cd2ef8.png)
-
-## 4. Gather Details
-
-Gather the following details:
+## 2. Gather Data Explorer Code
+Chart your metrics in the data explorer and copy the output from the `code` tab.
+Complete this Excel and send an email to `services.apac@dynatrace.com`. Attach the following details and the Excel sheet:
 
 1. Dynatrace environment URL: eg. `https://abc123.live.dynatrace.com`
 2. Dynatrace API Token: From above...
-3. Dynatrace dashboard ID: From above...
-4. Your Initials
-5. Customer name
+3. Your Initials
+4. Customer name
 
-# 5. Submit Details
+Your quality gate will be created and you will receive login information within one business day.
 
-Send an email to `services.apac@dynatrace.com`. Your quality gate will be created and you will receive login information within one business day.
+## 3. Arrange Customer Call
+Arrange a call with your customer for the Innovation team to discuss the results and next steps.
