@@ -27,7 +27,7 @@ Create an API token with API v2 permissions `Read Metrics`
 
 ## 2. Gather Data Explorer Code
 Chart your metrics in the data explorer and copy the output from the `code` tab.
-Complete this Excel and send an email to `services.apac@dynatrace.com`. Attach the following details and the Excel sheet:
+Complete [this Excel sheet](assets/qualitycheckfiles/sli_sample.xlsx) and send an email to `services.apac@dynatrace.com`. Attach the following details and the Excel sheet:
 
 1. Dynatrace environment URL: eg. `https://abc123.live.dynatrace.com`
 2. Dynatrace API Token: From above...
