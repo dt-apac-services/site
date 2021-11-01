@@ -1,0 +1,187 @@
+
+<!doctype html>
+
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  <meta charset="UTF-8">
+  <title>Generic Entity Model Tutorial</title>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
+  <style>
+    .success {
+      color: #1e8e3e;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+  <google-codelab codelab-gaid=""
+                  id="generic-entity-model-tutorial"
+                  title="Generic Entity Model Tutorial"
+                  environment="web"
+                  feedback-link="https://dt-apac-services.github.io/site/">
+    
+      <google-codelab-step label="Overview" duration="0">
+        <p>The generic entity model in Dynatrace means you can represent <strong>any</strong> physical or logical &#34;item&#34; in Dynatrace. You are no longer restricted to hosts, process groups, processes, services and applications.</p>
+<p>Metrics and events can be assigned to these entities.</p>
+<p>Imagine you operate a car rental company. You probably want a way to represent <code>cars</code> in Dynatrace. Then you can retrieve the telemetry data from each car and attach it to the correct car in Dynatrace. Any faults with the car might be pushed into Dynatrace as a problem opening event. More minor events (such as notifications that a car requires a service) could be pushed as informational events.</p>
+<p class="image-container"><img alt="car list" src="img\\c9db70ea38ffb8f3.png"><img alt="car 1" src="img\\818869cdad2cd1a5.png"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Prerequisites" duration="0">
+        <p>Although there is an extensive set of Dynatrace APIs, the authors of this codelab have done the hard work for you and created a helper script to create things for you.</p>
+<p>You&#39;ll need:</p>
+<ul>
+<li>Python Installed</li>
+<li>Requests Module Installed: <code>pip install requests</code></li>
+<li>A Dynatrace environment</li>
+<li>A Dynatrace API Token with permissions: <code>read settings</code>, <code>write settings</code>, <code>read entities</code>, <code>write entities</code> and <code>ingest metrics</code></li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Define Entity" duration="0">
+        <p>Define what type of entity to create. In our case, a <code>car</code>.</p>
+<p>Next define the properties (or facts) that you&#39;d like your car to have, such as:</p>
+<ul>
+<li>Brand</li>
+<li>Model</li>
+<li>Colour</li>
+<li>Fuel Type</li>
+<li>Fuel Tank Capacity</li>
+<li>Current Hire Status (whether the car is currently hired out or not)</li>
+</ul>
+<p>Create a JSON file which follows this syntax:</p>
+<pre><code>[{
+    &#34;name&#34;: &#34;car&#34;,
+    &#34;attributes&#34;: [ &#34;registration_number&#34;, &#34;brand&#34;, &#34;model&#34;, &#34;colour&#34;, &#34;tank_capacity&#34;, &#34;hire_status&#34; ]
+}]
+</code></pre>
+<p>Save this JSON file.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Create the Entity" duration="0">
+        <p>Download the helper script from <a href="https://github.com/dt-apac-innovators/generic-entity-model/blob/main/app.py" target="_blank">here</a> and save as <code>app.py</code> alongside your JSON file.</p>
+<p>Run the helper script in dry run mode (no changes will be made):</p>
+<pre><code>python app.py --input=input.json --environment=https://&lt;TENANT-ID&gt;.live.dynatrace.com --token=dtc01.*** --dry-run
+</code></pre>
+<p>If all is OK, remove the <code>--dry-run</code> flag and your entity will be created:</p>
+<pre><code>python app.py --input=input.json --environment=https://&lt;TENANT-ID&gt;.live.dynatrace.com --token=dtc01.***
+</code></pre>
+<p>Note: This script will check whether entity types for the names you specified in <code>input.json</code> already exist. If they do exist, the script will not overwrite.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Create Entities" duration="0">
+        <p>The framework of your <code>car</code> object is now in Dynatrace. It is time to create some instances of <code>car</code> objects. Do this by pushing metrics to your <code>car</code>.</p>
+<p>The helper script above automatically adds a <code>carid</code> dimension so each <code>car</code> must have a unique ID.</p>
+<p>Push a metric that indicates that the <code>car</code> has been &#34;discovered&#34; (ie. it actually exists):</p>
+<p>Modify the following command with your details. Notice the <code>1</code> just means we&#39;ve discovered the car.</p>
+<pre><code>curl -X POST &#34;https://&lt;TENANT-ID&gt;.live.dynatrace.com/api/v2/metrics/ingest&#34; ^
+-H &#34;accept: */*&#34; ^
+-H &#34;Authorization: Api-Token &lt;API-TOKEN&gt;&#34; ^
+-H &#34;Content-Type: text/plain; charset=utf-8&#34; ^
+-d &#34;entity.car.discovered,carid=ABC123,registration_number=ABC123,brand=Mercedes,model=C-Class,colour=Silver,tank_capacity=60,hire_status=spare 1&#34;
+</code></pre>
+<p>You should get the following output:</p>
+<pre><code>{
+  &#34;linesOk&#34;:1,
+  &#34;linesInvalid&#34;:0,
+  &#34;error&#34;:null,
+  &#34;warnings&#34;:null
+}
+</code></pre>
+<p>Repeat this process if you&#39;d like to create additional <code>car</code>s. You must include <strong>all</strong> of your fields every time you push a metric.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="View Your Cars" duration="0">
+        <p>Go to this URL to view a list of your cars:</p>
+<pre><code>https://&lt;TENANT-ID&gt;.live.dynatrace.com/ui/entity/list/entity:car
+</code></pre>
+<p class="image-container"><img alt="car list" src="img\\c9db70ea38ffb8f3.png"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Push Additional Metrics" duration="0">
+        <p>You decide to push a metric to your car to track fuel consumption in real time.</p>
+<p>The metric ID you decide on is <code>entity.car.fuel</code></p>
+<p>To signal that the car has 43 litres of fuel left in the tank, you&#39;d push this:</p>
+<pre><code>curl -X POST &#34;https://&lt;TENANT-ID&gt;.live.dynatrace.com/api/v2/metrics/ingest&#34; ^
+-H &#34;accept: */*&#34; -H &#34;Authorization: Api-Token &lt;API-TOKEN&gt;&#34; ^
+-H &#34;Content-Type: text/plain; charset=utf-8&#34; ^
+-d &#34;entity.car.fuel,carid=ABC123,registration_number=ABC123,brand=Mercedes,model=C-Class,colour=Silver,tank_capacity=60,hire_status=spare 43&#34;
+</code></pre>
+<p>Someone has just hired your car. Change the <code>hire_status</code> to <code>hired</code>:</p>
+<pre><code>curl -X POST &#34;https://&lt;TENANT-ID&gt;.live.dynatrace.com/api/v2/metrics/ingest&#34; ^
+-H &#34;accept: */*&#34; ^
+-H &#34;Authorization: Api-Token &lt;API-TOKEN&gt;&#34; ^
+-H &#34;Content-Type: text/plain; charset=utf-8&#34; ^
+-d &#34;entity.car.discovered,carid=ABC123,registration_number=ABC123,brand=Mercedes,model=C-Class,colour=Silver,tank_capacity=60,hire_status=hired 1&#34;
+</code></pre>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Push Events To Cars" duration="0">
+        <p>To push events to entities in Dynatrace, find the <code>CUSTOM_DEVICE</code> ID for each car:</p>
+<pre><code>curl -X GET &#34;https://&lt;TENANT-ID&gt;.live.dynatrace.com/api/v2/entities?entitySelector=type(\&#34;entity:car\&#34;),registration_number(\&#34;VO51123\&#34;)&#34; ^
+-H &#34;accept: application/json; charset=utf-8&#34; ^
+-H &#34;Authorization: Api-Token &lt;API-TOKEN&gt;&#34;
+</code></pre>
+<p>Then tag that car with its unique registration number:</p>
+<pre><code>curl -X POST &#34;https://&lt;TENANT-ID&gt;.live.dynatrace.com/api/v2/tags?entitySelector=type(\&#34;entity:car\&#34;),registration_number(\&#34;VO51123\&#34;)&#34; ^
+-H &#34;accept: application/json; charset=utf-8&#34; ^
+-H &#34;Authorization: Api-Token &lt;API-TOKEN&gt;&#34; ^
+-H &#34;Content-Type: application/json; charset=utf-8&#34; ^
+-d &#34;{\&#34;tags\&#34;:[{\&#34;key\&#34;:\&#34;registration_number\&#34;,\&#34;value\&#34;:\&#34;VO51123\&#34;}]}&#34;
+</code></pre>
+<p>This script retrieves each <code>car</code> entity where the <code>registration_number</code> exists and tags it appropriately. You should see this response:</p>
+<pre><code>{
+  &#34;matchedEntitiesCount&#34;:1,
+  &#34;appliedTags&#34;:[{
+    &#34;context&#34;:&#34;CONTEXTLESS&#34;,
+    &#34;key&#34;:&#34;registration_number&#34;,
+    &#34;value&#34;:&#34;VO51123&#34;,
+    &#34;stringRepresentation&#34;:&#34;registration_number:VO51123&#34;
+  }]
+}
+</code></pre>
+<p class="image-container"><img alt="car tag" src="img\\d74edf82df9eedc7.png"></p>
+<p>Push an event to your car (in this case, an event that opens a problem):</p>
+<pre><code>curl -X POST &#34;https://&lt;TENANT-ID&gt;.live.dynatrace.com/api/v1/events&#34; ^
+-H &#34;accept: application/json&#34; ^
+-H &#34;Content-Type: application/json&#34; ^
+-H &#34;Authorization: Api-Token &lt;API-TOKEN&gt;&#34; ^
+-d &#34;{\&#34;title\&#34;:\&#34;problem title\&#34;,\&#34;description\&#34;:\&#34;problem description\&#34;,\&#34;source\&#34;:\&#34;Swagger API\&#34;,\&#34;eventType\&#34;:\&#34;ERROR_EVENT\&#34;,\&#34;timeoutMinutes\&#34;:1,\&#34;attachRules\&#34;:{\&#34;entityIds\&#34;:[\&#34;CUSTOM_DEVICE-5D477C401606B766\&#34;],\&#34;tagRule\&#34;:[{\&#34;meTypes\&#34;:[\&#34;CUSTOM_DEVICE\&#34;],\&#34;tags\&#34;:[{\&#34;context\&#34;:\&#34;CONTEXTLESS\&#34;,\&#34;key\&#34;:\&#34;registration_number\&#34;,\&#34;value\&#34;:\&#34;VO51123\&#34;}]}]}}&#34;
+</code></pre>
+<p class="image-container"><img alt="car problem" src="img\\919935941ed4f32a.png"></p>
+<p class="image-container"><img alt="car problem 2" src="img\\3bc7a8229dd9bac8.png"></p>
+
+
+      </google-codelab-step>
+    
+  </google-codelab>
+
+  <script src="https://storage.googleapis.com/codelab-elements/native-shim.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/custom-elements.min.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/prettify.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/codelab-elements.js"></script>
+  <script src="//support.google.com/inapp/api.js"></script>
+
+</body>
+</html>

@@ -8,6 +8,7 @@ All training content and tutorials for the Dynatrace APAC Services team will be 
 - [Quality Gates (vHOT)](tutorials/qualitygates/)
 - [Self Study: Monitoring as Code](tutorials/mac_selfstudy/)
 - [FluentD and Generic Log Ingestion Tutorial](tutorials/fluentd/)
+- [Generic Entity Model Tutorial](tutorials/generic-entity-model-tutorial/)
 
 ### DevOps / Site Reliability Engineering
 

@@ -1,0 +1,25 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "https://storage.googleapis.com",
+  "mainga": "UA-49880327-14",
+  "updated": "2021-11-01T15:18:36+10:00",
+  "id": "generic-entity-model-tutorial",
+  "duration": 0,
+  "title": "Generic Entity Model Tutorial",
+  "authors": "Adam Gardner",
+  "summary": "Generic Entity Model Tutorial",
+  "source": "generic-entity-model-tutorial.md",
+  "theme": "",
+  "status": [
+    "published"
+  ],
+  "category": [
+    "generic-entity-model"
+  ],
+  "tags": [
+    "generic-entity-model"
+  ],
+  "feedback": "https://dt-apac-services.github.io/site/",
+  "url": "generic-entity-model-tutorial"
+}
