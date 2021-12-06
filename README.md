@@ -9,6 +9,7 @@ All training content and tutorials for the Dynatrace APAC Services team will be 
 - [Self Study: Monitoring as Code](tutorials/mac_selfstudy/)
 - [FluentD and Generic Log Ingestion Tutorial](tutorials/fluentd/)
 - [Generic Entity Model Tutorial](tutorials/generic-entity-model-tutorial/)
+- [NATS Tutorial - Keptn & Cloud Automation](tutorials/nats-tutorial/)
 
 ### DevOps / Site Reliability Engineering
 
