@@ -1,0 +1,232 @@
+
+<!doctype html>
+
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  <meta charset="UTF-8">
+  <title>NATS / Cloud Automation Tutorial</title>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
+  <style>
+    .success {
+      color: #1e8e3e;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+  <google-codelab codelab-gaid=""
+                  id="nats-tutorial"
+                  title="NATS / Cloud Automation Tutorial"
+                  environment="web"
+                  feedback-link="https://dt-apac-services.github.io/site/">
+    
+      <google-codelab-step label="Overview" duration="0">
+        <p>This hands-on tutorial will introduce <a href="https://nats.io" target="_blank">NATS</a> and explain its foundational role in the Dynatrace Cloud Automation module.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Prerequisites" duration="0">
+        <p>To follow the hands-on portions of this tutorial you will need:</p>
+<ul>
+<li>Docker installed</li>
+<li>Ability to download an <code>.exe</code> file and (optionally) add it to your <code>PATH</code></li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Brief NATS Introduction" duration="0">
+        <p>NATS is what is called &#34;message oriented middleware&#34;. At it&#39;s most basic, it is a one-to-many publisher / subscriber tool.</p>
+<p>Message <em>publishers</em> publish messages into &#34;subjects&#34;. A Subject is created in realtime and can be any alphanumeric string, using dots as a seperator. In this way, a publisher is completely free to &#34;create&#34; subjects at any time.</p>
+<p>Messages <em>subscribers</em> &#34;listen&#34; for messages for a particular subject.</p>
+<p>As already mentioned, you are free to make up any subject name you want. The following are all valid message subject names:</p>
+<pre><code>time.us
+foo.bar
+com.dynatrace.event.agent.installed
+notifications.good.things
+notifications.bad.things
+</code></pre>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Start a NATS Server" duration="0">
+        <p>Now that we understand the basics of NATS, let&#39;s start up a NATS server:</p>
+<pre><code>docker run -p 8222:8222 -p 4222:4222 -ti nats:latest
+</code></pre>
+<p>Port <code>8222</code> is a web-based stats interface - we&#39;ll use it just to prove NATS is online. Port <code>4222</code> is the main port you need. It&#39;s the one that messages are published on and subscribers listen via.</p>
+<p>Point your browser to <code>http://localhost:8222</code> and you should see the web interface. This proves NATS is online. If you want, you can stop docker and relaunch just with port <code>4222</code> (or just leave it running as-is).</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Install NATS CLI" duration="0">
+        <p>The NATS Command Line Interface tool is the utility we will use to work with NATS.</p>
+<p>Download and extract the <code>exe</code> file for the <a href="https://github.com/nats-io/natscli/releases" target="_blank">latest release from GitHub</a>. Optionally, add it to your <code>PATH</code> too.</p>
+<p>Running <code>nats --version</code> should provide the version number you downloaded.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Subscribe to a Subject" duration="0">
+        <p>Imagine your application would like to listen for messages that indicate &#34;good things&#34; happening. You have spoken to the developer and they&#39;ve informed you that they will publish messages onto the <code>com.dynatrace.things.good</code> subject. So now you (in real life, your application or microservice) need to subscribe to that.</p>
+<p>The syntax for subscribing to a subject is: <code>nats sub subject_name</code></p>
+<p>Open a new <code>cmd</code> window and type: <code>nats sub com.dynatrace.things.good</code></p>
+<pre><code>...&gt; nats sub com.dynatrace.things.good
+14:49:15 Subscribing on com.dynatrace.things.good
+</code></pre>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Publish A Message" duration="0">
+        <p>Publish the first message to that subject. Open a new <code>cmd</code> window and again use the <code>nats</code> CLI.</p>
+<p>You should now have 3 cmd terminals open:</p>
+<ol type="1">
+<li>Server</li>
+<li>Subscriber</li>
+<li>Publisher</li>
+</ol>
+<p>This time, to publish a message:</p>
+<p>The syntax is: <code>nats pub subject_name "Your Message Here"</code></p>
+<p>Type: <code>nats pub com.dynatrace.things.good "This is my first good message..."</code></p>
+<pre><code>...&gt; nats pub com.dynatrace.things.good &#34;This is my first good message...&#34;
+14:51:18 Published 32 bytes to &#34;com.dynatrace.things.good&#34;
+</code></pre>
+<p>Flick across to the subscriber cmd window and you will see this:</p>
+<pre><code>...&gt; nats sub com.dynatrace.things.good
+14:49:15 Subscribing on com.dynatrace.things.good
+[#1] Received on &#34;com.dynatrace.things.good&#34;
+This is my first good message...
+</code></pre>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Another Service Subscribes to Good Events" duration="0">
+        <p>Imagine a second service also wishes to consume the &#34;good&#34; events. It too can listen to <code>com.dynatrace.things.good</code> and react to these events.</p>
+<p>The second service probably does something entirely different with teh data.</p>
+<p>Open another new <code>cmd</code> window and subscribe to the <code>com.dynatrace.things.good</code> subject:</p>
+<pre><code>...&gt; nats sub com.dynatrace.things.good
+15:52:01 Subscribing on com.dynatrace.things.good
+</code></pre>
+<p>Using the publisher <code>cmd</code> terminal window, publish a second message:</p>
+<pre><code>nats pub com.dynatrace.things.good &#34;This is my second good message...&#34;
+</code></pre>
+<p>Notice how <strong>both</strong> subscribers receive this second message.</p>
+<p class="image-container"><img alt="nats1" src="img\\f26ab5807ba19296.jpg"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Subscribe to a different subject" duration="0">
+        <p>Open a fifth <code>cmd</code> window and subscribe to a different subject - the subject name can be anything you like:</p>
+<pre><code>...&gt; nats sub com.dynatrace.things.bad
+14:54:25 Subscribing on com.dynatrace.things.bad
+</code></pre>
+<p>Publish a third message on the &#34;good&#34; subject. Notice how this new subscriber <em>does not</em> receive the message:</p>
+<pre><code>...&gt; nats pub com.dynatrace.things.good &#34;This is my third good message...&#34;
+</code></pre>
+<p class="image-container"><img alt="nats2" src="img\\2ee36db127044cde.jpg"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Cool, But So What?" duration="0">
+        <p>Keptn (part of the Cloud Automation module) is underpinned by NATS and the concepts discussed above.</p>
+<p>Keptn generates NATS subjects and messages then orchestrates workflows that you build, based on these NATS subjects.</p>
+<p>This gives maximum flexibility: You decide what steps occur in the workflow and Keptn will orchestrate those steps using NATS messages.</p>
+<p>The only limitation is your imagination when it comes to building and wiring together workflows.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Working Example #1: Broadcasting Events" duration="0">
+        <p>Suppose you have a problem notification from Dynatrace that you wish to distribute to 5 different third party tools.</p>
+<p>You <em>could</em> create 5 different problem integrations and have Dynatrace send to each tool.</p>
+<p class="image-container"><img alt="nats3" src="img\\236327cd2e812de5.jpg"></p>
+<p>Alternatively, you could send the problem (once) to Cloud Automation and have those 5 different tools &#34;listen&#34; to that subject. Now each tool receives a copy of the problem report. One problem integration to manage in Dynatrace and an extensible pattern that is easy to maintain.</p>
+<p class="image-container"><img alt="nats3" src="img\\8fd3ee120f51bc0c.jpg"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Working Example #2: Event Enrichment" duration="0">
+        <p>Suppose you have multiple systems of record. These systems hold important additional information regarding your environment or infrastructure.</p>
+<p>For example, for the <code>frontend</code> application in <code>production</code>, the <code>owner</code> is stored in system of record A as <code>bob@example.com</code>. System of record B stores further information that shows the <code>service_owner</code> to be <code>kate@example.com</code>.</p>
+<p>This additional metadata needs to be retrieved, in realtime, for any problem coming from dynatrace for the <code>frontend</code> application in <code>production</code>. Only then can your team be notified as they&#39;ll have the info they need to action the problem.</p>
+<p>So logically, the &#34;flow&#34; would look like this:</p>
+<ol type="1">
+<li>Problem event received from Dynatrace</li>
+<li>Retrieve any available metadata from System of Record A</li>
+<li>Retrieve any available metadata from System of Record B</li>
+<li>Add metadata to the event</li>
+<li>Pass enriched event to the teams (eg. Create an incident, send a Slack message or an email notification)</li>
+</ol>
+<p>This could be modelled in Cloud Automation as follows:</p>
+<pre><code>...
+sequences:
+  - name: &#34;problem-notification&#34;
+    tasks:
+      - name: &#34;enrich-event&#34;
+      - name: &#34;distribute-event&#34;
+...
+</code></pre>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Cloud Automation Lifecycle" duration="0">
+        <p>The lifecycle of a Cloud Automation sequence is:</p>
+<ol type="1">
+<li>Message published to the <code>...triggered</code> subject</li>
+<li>Message(s) published to the <code>...started</code> subject</li>
+<li>Message(s) published to the <code>...finished</code> subject</li>
+</ol>
+<p>Humans (and third party tools) interact at the sequence level and send in <code>.triggered</code> events. Cloud Automation manages and distributes the <code>triggered</code> events at the task level. In other words, we ask Cloud Automation to <code>trigger</code> the <code>problem-notification</code> sequence and Cloud Automation manages and co-ordinates the minutae of the tasks involved (<code>enrich-event</code> and <code>distribute-event</code>).</p>
+<p>For example: When a problem is received into Cloud Automation:</p>
+<ul>
+<li>An incoming payload (eg. from Dynatrace) has the <code>type</code> set to <code>sh.keptn.event.problem-notification.triggered</code> (this is our subject like <code>com.dynatrace.messages.good</code> was earlier)</li>
+<li>A NATS message is automatically generated by Cloud Automation and distributed to the <code>sh.keptn.event.enrich-event.triggered</code> subject</li>
+<li>Both Systems of Record (A and B) listen for messages on the <code>sh.keptn.event.enrich-event.triggered</code> subject. Cloud Automation knows that two subscribers are listening for messages on this channel</li>
+<li>Each System of Record seperately send a <code>sh.keptn.event.enrich-event.started</code> message back to Cloud Automation</li>
+<li>Each System of Record seperately does it&#39;s own event enrichment</li>
+<li>Each System of Record seperately sends a <code>sh.keptn.event.enrich-event.finished</code> message back to Cloud Automation. Cloud Automation knows that all listening services have responded and so it can progress</li>
+<li>Cloud Automation combines the payloads from the steps above, generates and distributes a message on the <code>sh.keptn.event.distribute-event.triggered</code> subject.</li>
+<li>Your ticketing system is subscribing to messages on the <code>sh.keptn.event.distribute-event.triggered</code> so it sends back an <code>sh.keptn.distribute-event.started</code> message to notify Cloud Automation</li>
+<li>Your ticketing system does what is necessary then sends a message on the <code>sh.keptn.event.distribute-event.finished</code> subject back to Cloud Automation</li>
+<li>Cloud Automation knows that the workflow is finished and so distributes a final message on the <code>sh.keptn.event.problem-notification.finished</code> subject</li>
+</ul>
+<p>The benefit of this architecture should be clear - you can scale up or swap Systems of Record providers (aka message consumers) whenever you like - the workflow remains the same and there is no additional logic required for it to &#34;just work&#34;.</p>
+<p>In short, you design the workflow and Cloud Automation will orchestrate that workflow for you.</p>
+<p class="image-container"><img alt="nats5" src="img\\3bbb0c33fb64b385.jpg"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Summary" duration="0">
+        <p>We now have a Dynatrace-native way to build, model, orchestrate and execute arbitrary any custom sequences of tasks that customers may wish to build.</p>
+<p>Cloud Automation natively (and currently) provides code quality gates and auto-remediation &#34;out of the box&#34;. Over time more capabilities are expected to be added to Cloud Automation.</p>
+<p>However, as demonstrated in this tutorial, Cloud Automation is flexible and can cater to any custom workflow your customers may require.</p>
+
+
+      </google-codelab-step>
+    
+  </google-codelab>
+
+  <script src="https://storage.googleapis.com/codelab-elements/native-shim.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/custom-elements.min.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/prettify.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/codelab-elements.js"></script>
+  <script src="//support.google.com/inapp/api.js"></script>
+
+</body>
+</html>

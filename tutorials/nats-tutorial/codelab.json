@@ -1,0 +1,25 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "https://storage.googleapis.com",
+  "mainga": "UA-49880327-14",
+  "updated": "2021-12-07T09:36:16+10:00",
+  "id": "nats-tutorial",
+  "duration": 0,
+  "title": "NATS / Cloud Automation Tutorial",
+  "authors": "Adam Gardner",
+  "summary": "NATS Tutorial",
+  "source": "nats-tutorial.md",
+  "theme": "",
+  "status": [
+    "published"
+  ],
+  "category": [
+    "nats"
+  ],
+  "tags": [
+    "nats"
+  ],
+  "feedback": "https://dt-apac-services.github.io/site/",
+  "url": "nats-tutorial"
+}
