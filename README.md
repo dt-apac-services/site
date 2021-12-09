@@ -11,6 +11,9 @@ All training content and tutorials for the Dynatrace APAC Services team will be 
 - [Generic Entity Model Tutorial](tutorials/generic-entity-model-tutorial/)
 - [NATS Tutorial - Keptn & Cloud Automation](tutorials/nats-tutorial/)
 
+### Tools and Utilities
+- [Metric Aggregation Checker Tool](tutorials/metric-aggregation-checker-tool)
+
 ### DevOps / Site Reliability Engineering
 
 - [State of DevOps Reports](https://www.devops-research.com/research.html#reports)
