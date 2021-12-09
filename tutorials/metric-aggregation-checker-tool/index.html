@@ -1,0 +1,102 @@
+
+<!doctype html>
+
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  <meta charset="UTF-8">
+  <title>Metric Aggregation Checker</title>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
+  <style>
+    .success {
+      color: #1e8e3e;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+  <google-codelab codelab-gaid=""
+                  id="metric-aggregation-checker-tool"
+                  title="Metric Aggregation Checker"
+                  environment="web"
+                  feedback-link="https://dt-apac-services.github.io/site/">
+    
+      <google-codelab-step label="Overview" duration="0">
+        <p>The Dynatrace Data Explorer provides the possibility of visually charting all aggregations for all metrics. However, not all metrics support all aggregations.</p>
+<p>The data explorer will transparently chart a metric using that metrics default aggregation. This can lead to misleading results.</p>
+<p>For example, if you chart the 90th percentile for a metric which does not support percentiles - a chart will still be generated, but the data will be innaccurate.</p>
+<p>This small utility will output the supported aggregations, default aggregation for whatever metric you provide.</p>
+<p>This provides the capability for automation to ensure that the metric being used really does support your chosen aggregation and that your chart will be accurate.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Usage" duration="0">
+        <p>You will need an API token with <code>v2 Read Metrics</code> permissions.</p>
+<p><code>dt_url</code>, <code>dt_api_token</code> and <code>dt_metric_id</code> are all mandatory parameters.</p>
+<p><code>dt_display</code> and <code>dt_logging</code> are <em>optional</em> parameters.</p>
+<p><code>dt_display</code>choices are <code>all</code>, <code>unit</code>, <code>defaultAggregation</code> or <code>aggregations</code>. Default = <code>all</code></p>
+<p><code>dt_logging</code> is used for debug purposes to add additional logging. <code>set dt_logging=yes</code>. Defaults to <code>off</code> (no additional logging).</p>
+<pre><code>docker run --rm ^
+--env dt_url=https://abc12345.live.dynatrace.com ^
+--env dt_api_token=dt0c01.****** ^
+--env dt_metric_id=builtin:apps.web.actionCount.category ^
+--env dt_display=all ^
+adamgardnerdt/metric-aggregation-checker:v0.1
+</code></pre>
+<h2 is-upgraded>Sample Output</h2>
+<h2 is-upgraded>dt_display = all</h2>
+<pre><code>{
+  &#39;displayName&#39;: &#39;Action count (by Apdex category) [web]&#39;,
+  &#39;unit&#39;: &#39;Count&#39;,
+  &#39;aggregations&#39;: [&#39;auto&#39;, &#39;value&#39;],
+  &#39;defaultAggregation&#39;: {&#39;type&#39;: &#39;value&#39;}
+}
+</code></pre>
+<h2 is-upgraded>dt_display = unit</h2>
+<pre><code>{
+  &#39;displayName&#39;: &#39;Action count (by Apdex category) [web]&#39;,
+  &#39;unit&#39;: &#39;Count&#39;
+}
+</code></pre>
+<h2 is-upgraded>dt_display = defaultAggregation</h2>
+<pre><code>{
+  &#39;displayName&#39;: &#39;Action count (by Apdex category) [web]&#39;,
+  &#39;defaultAggregation&#39;: {&#39;type&#39;: &#39;value&#39;}
+}
+</code></pre>
+<h2 is-upgraded>dt_display = aggregations</h2>
+<pre><code>{
+  &#39;displayName&#39;: &#39;Action count (by Apdex category) [web]&#39;,
+  &#39;aggregations&#39;: [&#39;auto&#39;, &#39;value&#39;]
+}
+</code></pre>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Source Code and Improvements" duration="0">
+        <ul>
+<li>Source code (and improvements most welcome via Pull Requests): <a href="https://github.com/dt-apac-services/metric-aggregation-checker" target="_blank">this repo</a></li>
+<li>Docs improvements welcome via Pull Request to <a href="https://github.com/dt-apac-services/site" target="_blank">this repo</a></li>
+</ul>
+
+
+      </google-codelab-step>
+    
+  </google-codelab>
+
+  <script src="https://storage.googleapis.com/codelab-elements/native-shim.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/custom-elements.min.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/prettify.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/codelab-elements.js"></script>
+  <script src="//support.google.com/inapp/api.js"></script>
+
+</body>
+</html>

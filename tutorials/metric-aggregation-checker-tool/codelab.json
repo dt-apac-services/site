@@ -1,0 +1,26 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "https://storage.googleapis.com",
+  "mainga": "UA-49880327-14",
+  "updated": "2021-12-10T08:57:02+10:00",
+  "id": "metric-aggregation-checker-tool",
+  "duration": 0,
+  "title": "Metric Aggregation Checker",
+  "authors": "Adam Gardner",
+  "summary": "Metric Aggregation Checker Tool",
+  "source": "metric-aggregation-checker.md",
+  "theme": "",
+  "status": [
+    "published"
+  ],
+  "category": [
+    "dynatrace"
+  ],
+  "tags": [
+    "dynatrace",
+    "metrics"
+  ],
+  "feedback": "https://dt-apac-services.github.io/site/",
+  "url": "metric-aggregation-checker-tool"
+}
