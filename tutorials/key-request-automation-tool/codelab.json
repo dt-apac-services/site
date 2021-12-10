@@ -1,0 +1,26 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "https://storage.googleapis.com",
+  "mainga": "UA-49880327-14",
+  "updated": "2021-12-10T11:19:11+10:00",
+  "id": "key-request-automation-tool",
+  "duration": 0,
+  "title": "Key Request Automation Tool",
+  "authors": "Adam Gardner",
+  "summary": "Key Request Automation Tool",
+  "source": "key-request-automation.md",
+  "theme": "",
+  "status": [
+    "published"
+  ],
+  "category": [
+    "dynatrace"
+  ],
+  "tags": [
+    "dynatrace",
+    "key requests"
+  ],
+  "feedback": "https://dt-apac-services.github.io/site/",
+  "url": "key-request-automation-tool"
+}
