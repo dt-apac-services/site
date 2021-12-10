@@ -13,6 +13,7 @@ All training content and tutorials for the Dynatrace APAC Services team will be 
 
 ### Tools and Utilities
 - [Metric Aggregation Checker Tool](tutorials/metric-aggregation-checker-tool)
+- [Key Request Automation Tool](tutorials/key-request-automation-tool)
 
 ### DevOps / Site Reliability Engineering
 
