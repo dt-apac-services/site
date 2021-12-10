@@ -12,7 +12,7 @@ Feedback Link: https://dt-apac-services.github.io/site/
 
 This tool will allow you to create Key Requests:
 
-1. Before traffic has even arrived on a services
+1. Before traffic has even arrived on a service
 2. At massive scale
 3. In an automated way (eg. via a pipeline)
 
@@ -32,6 +32,8 @@ entitySelector|request_name
 type(SERVICE),tag(owned_by:owner@me.com)|/pageone.html
 type(SERVICE),tag(application:frontend),tag(environment:production)|/pagetwo.html
 ```
+
+![kr tool 2](assets/key_request_tool_2.png)
 
 ## Apply Configuration
 
