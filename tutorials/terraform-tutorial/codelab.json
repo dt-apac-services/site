@@ -1,0 +1,25 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "https://storage.googleapis.com",
+  "mainga": "UA-49880327-14",
+  "updated": "2022-01-17T13:40:46+10:00",
+  "id": "terraform-tutorial",
+  "duration": 0,
+  "title": "Dynatrace and Terraform Tutorial",
+  "authors": "Riley McClelland",
+  "summary": "Terraform Tutorial",
+  "source": "dynatrace_and_terraform.md",
+  "theme": "",
+  "status": [
+    "published"
+  ],
+  "category": [
+    "terraform"
+  ],
+  "tags": [
+    "terraform"
+  ],
+  "feedback": "https://dt-apac-services.github.io/site/",
+  "url": "terraform-tutorial"
+}

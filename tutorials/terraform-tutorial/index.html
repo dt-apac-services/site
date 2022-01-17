@@ -1,0 +1,194 @@
+
+<!doctype html>
+
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  <meta charset="UTF-8">
+  <title>Dynatrace and Terraform Tutorial</title>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
+  <style>
+    .success {
+      color: #1e8e3e;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+  <google-codelab codelab-gaid=""
+                  id="terraform-tutorial"
+                  title="Dynatrace and Terraform Tutorial"
+                  environment="web"
+                  feedback-link="https://dt-apac-services.github.io/site/">
+    
+      <google-codelab-step label="Overview" duration="0">
+        <h2 is-upgraded>What is Terraform?</h2>
+<p>Terraform is an infrastructure as code (IaC) tool that allows you to build, change, and version infrastructure safely and efficiently. This includes low-level components such as compute instances, storage, and networking, as well as high-level components such as DNS entries, SaaS features, etc. Terraform can manage both existing service providers and custom in-house solutions.</p>
+<h2 is-upgraded>What Do We Need to Know?</h2>
+<p>As Dynatrace Experts we need to know how best to integrate Dynatrace with IaC tools such as terraform so that we can install Dynatrace agents quickly and efficiently. If we can implement the Dynatrace agent through Terraform, then this code can be copied across multiple different environments allowing for easier implementation of Dynatrace.</p>
+<p>Additionally, clients will commonly have a ‘base build&#39; for their environment, these include OS, Box Specifications, and permissions. If we as Dynatrace experts can implement Dynatrace onto that ‘base build&#39; then Dynatrace will be included with every single box spun up in the client infrastructure.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Tutorial on GCP: Problem Statement" duration="0">
+        <p>I as a Dynatrace Expert want to implement the Dynatrace OneAgent as code using Terraform.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Terraform Best Practices" duration="0">
+        <ul>
+<li>I should be able to customize variables to easily select the Dynatrace Tenancy</li>
+<li>I should be able to customize variables to implement Host Groups and other Install arguments</li>
+<li>Dynatrace PAAS Token should never appear in plaintext in any code and instead should be input via argument</li>
+</ul>
+<p>One of the best ways to learn how to use Terraform is to go through the tutorials and then use the registry as a reference to develop additional resources. Due to this I will be adding links to additional pages I used to solve this problem. Each page should be from either GCP or Terraform Documentation.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Create Infrastructure" duration="0">
+        <p>First complete the following Terraform Tutorial so that a VM Instance is created within GCP: <a href="https://learn.hashicorp.com/tutorials/terraform/infrastructure-as-code?in=terraform/gcp-get-started" target="_blank">https://learn.hashicorp.com/tutorials/terraform/infrastructure-as-code?in=terraform/gcp-get-started</a></p>
+<p class="image-container"><img src="img\\52972512f3cc0142.png"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Define Variables" duration="0">
+        <p>Next define your variables in a <code>variables.tf</code> file. We need to define the following variables:</p>
+<ul>
+<li>Dynatrace Tenant</li>
+<li>Agent Arguments</li>
+<li>Dynatrace Tokens</li>
+</ul>
+<p>Note: There may be other variables set, I am only showing the Dynatrace related ones. Other variables might be the GCP Project ID set as part of the tutorial</p>
+<p>Reference: <a href="https://learn.hashicorp.com/tutorials/terraform/google-cloud-platform-variables?in=terraform/gcp-get-started" target="_blank">https://learn.hashicorp.com/tutorials/terraform/google-cloud-platform-variables?in=terraform/gcp-get-started</a></p>
+<pre><code>variable &#34;dt_tenant&#34; {
+  type = string
+  description = &#34;This is the ID of the Dynatrace tenant https://_________.live.dynatrace.com&#34;
+  default = &#34;&lt;Put Dynatrace ID Here&gt;&#34;
+}
+
+variable &#34;agent_arg&#34; {
+  type = string
+  description = &#34;These are the agent arguments used upon installation of the Dynatrace Agent&#34;
+  default = &#34;&lt;Put Default Agent Arguments Here&gt;&#34;
+}
+
+variable &#34;dt_token&#34; {
+  type = string
+  description = &#34;This is the Dynatrace PAAS Token used to download the agent file&#34;
+  sensitive = true
+}
+#The sensitive argument here ensures that the value will not appear in any plans thereby exposing the token
+</code></pre>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Create Secret" duration="0">
+        <p>Next we need to create our secret in GCP. GCP Secrets work through creating a base secret, and then the value of the secret is then held in a ‘version&#39;. Due to this we need to do the same in Terraform creating both a ‘secret-basic&#39; and a ‘secret-version-basic&#39;</p>
+<p>Note: In order to complete this step your terraform service account must have  the ‘secret manager admin role&#39; please see <a href="https://cloud.google.com/secret-manager/docs/creating-and-accessing-secrets" target="_blank">these instructions</a> for more help.</p>
+<p>Reference: <a href="https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/secret_manager_secret_version" target="_blank">https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/secret_manager_secret_version</a></p>
+<pre><code>resource &#34;google_secret_manager_secret&#34; &#34;secret-basic&#34; {
+  secret_id = &#34;secret-version&#34;
+  labels = {
+    label = &#34;my-label&#34;
+  }
+  replication {
+    automatic = true
+  }
+}
+resource &#34;google_secret_manager_secret_version&#34; &#34;secret-version-basic&#34; {
+  secret = google_secret_manager_secret.secret-basic.id
+  secret_data = var.dt_token
+}
+</code></pre>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="VM Instance Script" duration="0">
+        <p>First the VM Instance itself, will need to have the correct OS and specifications to run a Dynatrace Agent. Due to this I changed the specifications from the Terraform Tutorial to ‘e2-micro&#39; and ‘rhel-8&#39;</p>
+<p>Next I ensured that the network interface was the default, this allows us to SSH onto the vm instance ourselves to verify if there are any issues with the Dynatrace agent. Note this requires the default network firewall rules to have port 22 open.</p>
+<p>After this I set the service account to one of my service accounts in GCP. Note that this service account must have the secretAccessor role in order for it to access the Dynatrace Token Secret.</p>
+<p>Finally I added metadata to allow for oslogin, this was another step designed to making logging onto the box easier. Reference can be found here: https://cloud.google.com/compute/docs/instances/access-overview</p>
+<pre><code>resource &#34;google_compute_instance&#34; &#34;vm_instance&#34; {
+  name         = &#34;terraform-instance&#34;
+  machine_type = &#34;e2-micro&#34; #This sets the specifications of the VM Instance
+  allow_stopping_for_update = true #This allows Terraform to tear down the instance for updates if needed
+  
+  boot_disk {
+    initialize_params {
+      image = &#34;rhel-cloud/rhel-8&#34;
+    }
+  }
+
+  network_interface {
+    network = &#34;default&#34;
+    access_config {
+    }
+  }
+   
+  service_account{
+    email = &#34;982955065423-compute@developer.gserviceaccount.com&#34;
+	scopes = [&#34;cloud-platform&#34;]
+  }
+  metadata_startup_script = *cut from this step*
+  metadata = {
+    enable-oslogin = &#34;TRUE&#34;
+  }
+}
+</code></pre>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="VM Startup Script" duration="0">
+        <p>Now for the startup script, GCP allows for a startup script to be set as metadata for the VM instance. Due to this we need to be careful to ensure the Dynatrace Token does not appear in the VM Instance Metadata.</p>
+<p>Note that everything the entire startup script should be one one line as below.</p>
+<pre><code>metadata_startup_script = &lt;&lt;SCRIPT TOKEN=$(gcloud secrets versions access latest --secret=&#34;secret-version&#34;  --format=&#39;get(payload.data)&#39; | tr &#39;_-&#39; &#39;/+&#39; | base64 -d);curl -X GET &#34;https://${var.dt_tenant}.live.dynatrace.com/api/v1/deployment/installer/agent/unix/default/latest?flavor=default&amp;arch=all&amp;bitness=all&amp;skipMetadata=false&amp;networkZone=default&#34; -H &#34;accept: */*&#34; -H &#34;Authorization: Api-Token $TOKEN&#34; &gt; /var/tmp/dynatrace-install.sh;chmod 755 /var/tmp/dynatrace-install.sh;sudo ./bin/sh /var/tmp/dynatrace-install.sh ${var.agent_arg}; SCRIPT
+</code></pre>
+<h2 is-upgraded>Explanation: Download OneAgent</h2>
+<p>The next command downloads the Dynatrace Agent and inserts it into a Dynatrace shell install file.</p>
+<pre><code>curl -X GET &#34;https://${var.dt_tenant}.live.dynatrace.com/api/v1/deployment/installer/agent/unix/default/latest?flavor=default&amp;arch=all&amp;bitness=all&amp;skipMetadata=false&amp;networkZone=default&#34; -H &#34;accept: */*&#34; -H &#34;Authorization: Api-Token $TOKEN&#34; &gt; /var/tmp/dynatrace-install.sh;
+</code></pre>
+<p>Here Terraform will change the variable <code>dt_tenant</code> to the requisite value set in the variables file.</p>
+<p>Note: <code>curl</code> was used here as opposed to <code>wget</code> because the GCP RHEL VM Starts with <code>curl</code>. This could be any command allowing for download of the agent</p>
+<h2 is-upgraded>Explanation: Change File Permissions</h2>
+<p>Next we change the permissions of the downloaded file so that it can be executed</p>
+<pre><code>chmod 755 /var/tmp/dynatrace-install.sh;
+</code></pre>
+<h2 is-upgraded>Explanation: Execute Shell Script</h2>
+<p>Finally we execute the downloaded shell script</p>
+<pre><code>sudo ./bin/sh /var/tmp/dynatrace-install.sh ${var.agent_arg};
+</code></pre>
+<p>Terraform automatically turns the referenced variable <code>agent_arg</code> into the related string allowing us to insert as many agent install arguments as we want provided they are formatted correctly.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="See Agent in Dynatrace" duration="0">
+        <p>With all this done we should see the agent show up in Dynatrace after a few minutes:</p>
+<p class="image-container"><img src="img\\63e932ce5ccf4ec0.png"></p>
+
+
+      </google-codelab-step>
+    
+  </google-codelab>
+
+  <script src="https://storage.googleapis.com/codelab-elements/native-shim.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/custom-elements.min.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/prettify.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/codelab-elements.js"></script>
+  <script src="//support.google.com/inapp/api.js"></script>
+
+</body>
+</html>
