@@ -10,6 +10,7 @@ All training content and tutorials for the Dynatrace APAC Services team will be 
 - [FluentD and Generic Log Ingestion Tutorial](tutorials/fluentd/)
 - [Generic Entity Model Tutorial](tutorials/generic-entity-model-tutorial/)
 - [NATS Tutorial - Keptn & Cloud Automation](tutorials/nats-tutorial/)
+- [Dynatrace and Terraform Tutorial](tutorials/terraform-tutorial/)
 
 ### Tools and Utilities
 - [Metric Aggregation Checker Tool](tutorials/metric-aggregation-checker-tool)
