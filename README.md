@@ -29,10 +29,5 @@ Want to contribute? It's easy! [Get started now](tutorials/create-tutorial/).
 ### Capabilities
 - [Create a Quality Check](https://dt-apac-services.github.io/site/createqualitycheck.html)
 
-### Contributing
-
-Any Dynatrace APAC employee is welcome to add links, tutorials, hints or tips to this site.
-
-This site and all tutorials are written in Markdown. If you can write Markdown, you can contribute.
-
-If you're a Dynatrace employee, please ask your manager for write access to the [underlying GitHub organisation](https://github.com/dt-apac-services).
+#### GitHub Repo
+All code for this site can be found in the [underlying GitHub organisation](https://github.com/dt-apac-services).
