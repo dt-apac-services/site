@@ -1,0 +1,25 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "https://storage.googleapis.com",
+  "mainga": "UA-49880327-14",
+  "updated": "2022-01-18T11:01:21+10:00",
+  "id": "create-tutorial",
+  "duration": 0,
+  "title": "Creating Tutorials",
+  "authors": "Adam Gardner",
+  "summary": "Creating Tutorials",
+  "source": "contributing_tutorial.md",
+  "theme": "",
+  "status": [
+    "published"
+  ],
+  "category": [
+    "instructions"
+  ],
+  "tags": [
+    "create-a-tutorial"
+  ],
+  "feedback": "https://dt-apac-services.github.io/site/",
+  "url": "create-tutorial"
+}
