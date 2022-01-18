@@ -2,6 +2,8 @@
 
 All training content and tutorials for the Dynatrace APAC Services team will be hosted here.
 
+Want to contribute? It's easy! [Get started now](tutorials/create-tutorial/).
+
 ### Tutorials
 
 - [Monitoring as Code (vHOT)](tutorials/mac/)
