@@ -14,7 +14,7 @@ Want to contribute? It's easy! [Get started now](tutorials/create-tutorial/).
 - [NATS Tutorial - Keptn & Cloud Automation](tutorials/nats-tutorial/)
 - [Dynatrace and Terraform Tutorial](tutorials/terraform-tutorial/)
 - [Dynatrace SNMP 2.0 How To](tutorials/dynatrace_snmp_2.0/)
-- [Ansible & AWX Tutorial](tutorials/ansible-aws-tutorial)
+- [Ansible & AWX Tutorial](tutorials/ansible-awx-tutorial)
 
 ### Tools and Utilities
 - [Metric Aggregation Checker Tool](tutorials/metric-aggregation-checker-tool)
