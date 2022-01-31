@@ -1,0 +1,157 @@
+
+<!doctype html>
+
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  <meta charset="UTF-8">
+  <title>Ansible/AWX Tutorial</title>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
+  <style>
+    .success {
+      color: #1e8e3e;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+  <google-codelab codelab-gaid=""
+                  id="Ansible-AWX-tutorial"
+                  title="Ansible/AWX Tutorial"
+                  environment="web"
+                  feedback-link="https://dt-apac-services.github.io/site/">
+    
+      <google-codelab-step label="Prerequisites and Notes" duration="0">
+        <p>This Ansible tutorial aims at teaching the basics of Ansible/AWX and then the basics of how Ansible can interact with Dynatrace. It doesn&#39;t really teach best practices or indepth topics but it should give you the building blocks to go and explore Ansible further.</p>
+<h2 is-upgraded>Prerequisites</h2>
+<ul>
+<li>An environment with Ansible and AWX installed <strong>OR</strong> a Ubuntu 20.04 server to install Ansible and AWX on.</li>
+<li>Basic knowledge of linux commands</li>
+<li>A GitHub account</li>
+</ul>
+<h2 is-upgraded>Extra Resources</h2>
+<p>As this tutorial only aims at getting you an environment setup as well as some basics to show you the power of Ansible you may be looking for more. I would highly suggest taking a look at Udemy as there are some great tutorials for expanding your knowledge and understanding of playbooks. As well as Udemy google is your best friend. Ansible is an incredibly well documented tool and there is plenty of information out there. Their own documentation can be challenging but there are guides and blogs for most things that you would want to do with Ansible.</p>
+<h2 is-upgraded>Notes</h2>
+<ul>
+<li>AWX is the open source community version of a product called Ansible Tower. AWX is incredibly similar and so most if not all information within this tutorial should be transferable to an Ansible Tower environment.</li>
+<li>Ansible is a commandline based tool for managing thousands of hosts at a time. AWX and Ansible Tower are programs which simplify interaction with Ansible and also provide some extra very useful features.</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Install Ansible and AWX" duration="0">
+        <p>If you already have an environment with Ansible and AWX then you can skip this step otherwise, lets get started!</p>
+<p>Follow <a href="https://linoxide.com/how-to-install-ansible-awx-on-ubuntu-20-04/" target="_blank">this tutorial</a> to setup an environment with Ansible and awx.</p>
+<p>Ensure while following the tutorial the packages you are downloading are up to date. Ensuring they are up to date is VERY IMPORTANT. Specifically look out for Ansible and NodeJS as they were the problem children during the creation of this tutorial.</p>
+<p>Also while following the tutorial ensure that during step 4 you uncomment the <code>admin_password</code> line in the inventory file and then set a secure password. This password you will use to login to AWX later.</p>
+<h2 is-upgraded>Notes</h2>
+<ul>
+<li>If NodeJS is out of date you can follow <a href="https://joshtronic.com/2021/10/24/how-to-install-nodejs-17-on-ubuntu-lts/" target="_blank">this tutorial</a> to download version 17 which works for this tutorial.</li>
+<li>If Ansible is out of date you can follow <a href="https://www.cyberciti.biz/faq/how-to-install-and-configure-latest-version-of-ansible-on-ubuntu-linux/" target="_blank">this tutorial</a> to install a newer version.</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Create First Inventory" duration="0">
+        <p>Now that you have Ansible and AWX installed lets create your first inventory file so that you can run playbooks on the servers defined within this inventory file.</p>
+<p>Create and navigate to a new directory for storing project files. Within this create a file called <code>inventory</code> and don&#39;t give it an extension. Add the following to this new inventory file. See the notes for an explanation as well as some other useful information.</p>
+<p class="image-container"><img alt="alt text" src="img\\d4d48afd37561293.png"></p>
+<p>From the directory with your inventory file run <code>ansible AWXLocal -i inventory -m ping</code>. The first time you run it, it should ask if you want to continue connecting, type yes and then it should connect and run! The output should look something like the following.</p>
+<p class="image-container"><img alt="alt text" src="img\\8adb27b3ec10bd6a.png"></p>
+<p>Congratulations, you just ran your first Ansible job using the ping module! Now lets continue and start using AWX to run and manage these.</p>
+<h2 is-upgraded>Notes</h2>
+<ul>
+<li>The first line is a host group called AWXG and then the second line creates a host called AWXLocal and defines the address as localhost. Host groups allow you to target specific groups with playbooks instead of just individual hosts.</li>
+<li>The next line <code>[all:vars]</code> specifies variables for the group called all. So this could also be <code>[AWXG:vars]</code> and then the variables would only be for hosts in AWXG. The last line specifies the user ansible will use to login to the specified host.</li>
+<li>If you use a password add a new line under ansible_user called ansible_ssh_pass and add the password for this user there. This goes against best practices and you should NOT do this in a production environment. Documentation for this can be found <a href="https://docs.ansible.com/ansible/latest/user_guide/vault.html" target="_blank">here</a>.</li>
+<li>If you use keys to access hosts then you can specify <code>ansible_ssh_private_key</code> under the <code>ansible_host</code> variable and then set this as the path for that key. The key has to be in .pem format and should have 600 permissions on it otherwise ansible will refuse it. Again, not recommended for production environments.</li>
+<li>If you do use a key then it may be useful to use the ssh-agent so you don&#39;t have to enter the keys passphrase each time if it has one. you can do this by first ensuring its running using <code>eval `ssh-agent`</code> and then by using <code>ssh-add key/location</code>. Replace key/location with the keys actual location for example <code>ssh-add /home/username/ansible/key.pem</code>.</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Create First AWX Project" duration="0">
+        <p>For our AWX project you will be using GitHub. By using GitHub you make it so that the project can be easily updated within AWX and also can be easily worked on by multiple people.</p>
+<p>Create a new respository and within it create 2 files, inventory.ini and playbook-01.yml. Within the inventory file put what you had in your first inventory but replace localhost with the actual address of the host. Also within the new inventory file remove any variables configured such as the username, password or key used to login to the host. We will define these credentials within AWX in future steps.</p>
+<p>Within the playbook file add the following and then push these changes back to your repository so that its up to date.</p>
+<p class="image-container"><img alt="alt text" src="img\\2c02ac98c09d7d9.png"></p>
+<p>On GitHub create a personal access token with read access to your repositories. You will be using this to create and update your project within AWX.</p>
+<p>Navigate to your AWX web portal and then navigate to the credentials page on the left. Add a new resource with type source control. Use your GitHub email as the username and the personal access token as your password and then save this credential.</p>
+<p class="image-container"><img alt="alt text" src="img\\9ea12d1019672bef.png"></p>
+<p>Navigate to the projects page and create a new project. Give it a name, set the source control as git, copy the GitHub URL for the project you created and then use the GitHub credentials you created as the source control credentials.</p>
+<p class="image-container"><img alt="alt text" src="img\\8455eecfb3705fb4.png"></p>
+<p>After creating the project navigate to the project page where all of your projects are listed and click on the sync project button. If this is successful you&#39;re ready to move on!</p>
+<p class="image-container"><img alt="alt text" src="img\\2daac6a94f1a293e.png"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Create And Run First AWX Job" duration="0">
+        <p>First you need to create an inventory using the inventory file from our project. Navigate within AWX to the inventory page and create a new inventory from there. Give it a name, selet your project in the source details section and then select the inventory file from your project.</p>
+<p class="image-container"><img alt="alt text" src="img\\de3ea2fffd786b84.png"></p>
+<p>Once created you will need to sync it like the project so on the page listing all of your inventories click on sync and if everything goes well you&#39;ll have a new inventory. To confirm everything has gone well check the hosts and groups page to see your host and group imported from your inventory.</p>
+<p>You might remember in previous steps you removed the login credentials from our inventory file so now you need to add them in AWX. Navigate to the credentials page and create a new credential. Set it to the type machine and then fill in the required details for host login such as username, password or key.</p>
+<p>Now, to run a job you need to create a job template so navigate to the templates page and create a new job template. On this page select the inventory you just created, the project you created earlier, the playbook thats in your project and then lastly the credentials required to login to the host.</p>
+<p class="image-container"><img alt="alt text" src="img\\bc1af95dc895f4b6.png"></p>
+<p>Now back on the templates page click the launch button for your newly created template and watch it execute. If everything goes correctly you just launched your first AWX job.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Install OneAgent Using AWX" duration="0">
+        <p>Ansible is an incredibly powerful tool used for managing hundreds if not thousands of hosts at a time. In this step you will have a quick look at how you can install OneAgent on our hosts with Ansible.</p>
+<p>Start by navigating to the OneAgent installation page within your dynatrace tenant. On this page there is a download link for a OneAgent Ansible collection which you will use to install OneAgent. Download the OneAgent collection onto the host running Ansible.</p>
+<p class="image-container"><img alt="alt text" src="img\\8e1219b12d29f23a.png"></p>
+<p>On the host with Ansible run <code>ansible-galaxy collection install downloadedFileName.tar.gz</code> replacing downloadedFileName with the actual file name.</p>
+<p>Now, like you did earlier, create a new playbook within out project directory. you can call this one Playbook-02.yml and then add the following.</p>
+<p class="image-container"><img alt="alt text" src="img\\aa58a02288881801.png"></p>
+<p>Replace the environment URL with your environments URL and then add your own PaaS token generated within Dynatrace.</p>
+<p>Save this new playbook and commit it to your repository. Back in AWX sync your project like you did earlier and then go through the steps to create a job template again but this time with your new playbook. Now run this new playbook and if it succeeds congratulations! If it doesn&#39;t I have some notes on problems I encountered and how to fix them.</p>
+<h2 is-upgraded>Notes</h2>
+<ul>
+<li>If you get an error that the OneAgent role was not found you can copy the role that you downloaded and installed directly into your project directory. you should be able to find the role in <code>/home/username/.ansible/collections/ansible_collections/dynatrace/oneagent/roles</code>. Copying the role into your project directory would look like the following.</li>
+</ul>
+<p class="image-container"><img alt="alt text" src="img\\1c49f5cf49d77f8b.png"></p>
+<ul>
+<li>If you get an error validating the installer signature then it may be a problem with the formatting of the tenant URL within your playbook file. I got this error when I had a / at the end of my url so instead of <code>something.dynatrace.com/</code> format it like <code>something.dynatrace.com</code>.</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Running Playbooks With Dynatrace" duration="0">
+        <p>Utilising problem notifications you can make Dynatrace trigger a playbook when certain problems occur. This can be incredibly powerful and allows for auto remediation so that people do not have to manually diagnose a problem and trigger a fix themselves.</p>
+<p>To set up an example of this head over to your Dynatrace tenant and navigate to Settings &gt; Integrations &gt; Problem Notifications and then add a new problem notification. Go through and configure the problem notification like I have. For the username and password this is the username and password that will be used to authenticate with AWX. For testing you can just use the admin account you use to login to AWX.</p>
+<p class="image-container"><img alt="alt text" src="img\\386105dea3545096.png"></p>
+<p>Now click send test notification and it should run whichever playbook you set up to run. If everything goes well, back in AWX you will see your playbook successfully run.</p>
+<p class="image-container"><img alt="alt text" src="img\\3e1f0cfafcaafc62.png"></p>
+<p>If you want to test it out further you can generate problems that would trigger notifications for the alerting profile you selected otherwise it is as easy as that!</p>
+<p>Thats it for the tutorial. For further testing and learning I would highly suggest finding a way to automate problem remediation within a test environment or you could go deeper into playbook creation. We only scratched the surface of what Ansible is capable of, there is so much more you can do.</p>
+<h2 is-upgraded>Notes</h2>
+<ul>
+<li>To get the URL for a job template to run navigate to it within AWX and then copy the url up to but not including <code>/details</code></li>
+<li>To make the job run for certain problems you would create an alerting profile so that it only runs when certain problems occur.</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+  </google-codelab>
+
+  <script src="https://storage.googleapis.com/codelab-elements/native-shim.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/custom-elements.min.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/prettify.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/codelab-elements.js"></script>
+  <script src="//support.google.com/inapp/api.js"></script>
+
+</body>
+</html>

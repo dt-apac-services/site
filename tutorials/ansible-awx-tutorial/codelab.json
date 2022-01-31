@@ -1,0 +1,25 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "https://storage.googleapis.com",
+  "mainga": "UA-49880327-14",
+  "updated": "2022-01-31T14:09:19+10:00",
+  "id": "Ansible-AWX-tutorial",
+  "duration": 0,
+  "title": "Ansible/AWX Tutorial",
+  "authors": "Fin Ubels",
+  "summary": "Ansible/AWX Tutorial",
+  "source": "ansible.md",
+  "theme": "",
+  "status": [
+    "published"
+  ],
+  "category": [
+    "ansible"
+  ],
+  "tags": [
+    "ansible"
+  ],
+  "feedback": "https://dt-apac-services.github.io/site/",
+  "url": "Ansible-AWX-tutorial"
+}
