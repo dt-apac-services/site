@@ -22,6 +22,7 @@ Want to contribute? It's easy! [Get started now](tutorials/create-tutorial/).
 
 ### DevOps / Site Reliability Engineering
 
+- [Google / O'Reilly: Enterprise Roadmap to SRE (free)](https://sre.google/resources/practices-and-processes/enterprise-roadmap-to-sre/)
 - [State of DevOps Reports](https://www.devops-research.com/research.html#reports)
 - [DevOps Maturity Survey (5 questions + instance feedback)](https://www.devops-research.com/quickcheck.html)
 - [SRE at Google](https://sre.google/)
