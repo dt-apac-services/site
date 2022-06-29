@@ -31,5 +31,13 @@ Want to contribute? It's easy! [Get started now](tutorials/create-tutorial/).
 ### Capabilities
 - [Create a Quality Check](https://dt-apac-services.github.io/site/createqualitycheck.html)
 
+### Automation Training
+- [1. Dynatrace Problem Enrichment](https://killercoda.com/agardnerit/scenario/problem-enrichment)
+- [2. Dynatrace Release Tracking](https://killercoda.com/agardnerit/scenario/release-tracking)
+- [3. Dynatrace Releases API](https://killercoda.com/agardnerit/scenario/releases-api)
+- [4. Create SLO Dashboard](automationtraining/1-dt-prep/index.md)
+- [5. Create Cluster and Install Keptn / Cloud Automation](https://example.com)
+- [6. Create Your First Quality Gate](https://example.com)
+
 #### GitHub Repo
 All code for this site can be found in the [underlying GitHub organisation](https://github.com/dt-apac-services).
