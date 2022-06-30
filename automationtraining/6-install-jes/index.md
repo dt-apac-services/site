@@ -94,7 +94,7 @@ Make the job executor say something different. Perhaps `Hello from Team X`
 
 ## Exercise: More Tasks
 
-Add a second task so your sequence first prints "Hello world!" and then (as a seperate task) prints "Hello world again"
+Add a second task so your sequence first prints "Hello world!" and then (as a separate task) prints "Hello world again"
 
 ## Exercise: Run a Different Container
 
