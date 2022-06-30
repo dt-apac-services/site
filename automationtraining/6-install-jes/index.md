@@ -19,7 +19,7 @@ Let's do the third one.
 
 ## Install Job Executor Service
 
-The [job executor service (JES)](https://github.com/keptn-contrib/job-executor-service) is a very powerful Keptn service. Advantages include:
+The [job executor service (JES)](https://github.com/keptn-contrib/job-executor-service) is a very powerful Keptn service:
 
 - Run any container in response to a Keptn task
 - Serverless and lightweight (jobs created by JES only run as long as they're needed). Pods are not running when they aren't needed
@@ -84,3 +84,22 @@ This file tells the JES that when the `sh.keptn.event.sayhello.triggered` event 
 Now re-run your sequence and watch as JES responds and says hello!
 
 ![](assets/images/install-jes-3.png)
+
+
+Complete the follow exercises in your teams:
+
+## Exercise: Say Something Different
+
+Make the job executor say something different. Perhaps `Hello from Team X`
+
+## Exercise: More Tasks
+
+Add a second task so your sequence first prints "Hello world!" and then (as a seperate task) prints "Hello world again"
+
+## Exercise: Run a Different Container
+
+Find a container image you know / like and have JES run that instead of `alpine`
+
+## Exercise: Run a shell (or Powershell script) with JES
+
+Create a shell or powershell script (contents are up to you). Have JES run that script.
