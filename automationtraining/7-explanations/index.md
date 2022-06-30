@@ -10,7 +10,7 @@ But how is all of this working?
 
 ## Start with the Shipyard
 
-The shipyard file is the blueprint of your Keptn environment. A shipyard has a one-to-one relationship with Keptn projects.
+The shipyard file is the blueprint of your Keptn environment. A shipyard has a one-to-one relationship a Keptn project.
 
 Go to the `main` branch of your Git repo and view the shipyard file:
 
@@ -29,6 +29,8 @@ spec:
 ```
 
 Your Keptn project has one stage `dev`. Inside that stage you have defined one sequence `sequence1` and within that sequence is a single (or possibly more if you got the previous exercises working) task called `sayhello`.
+
+You are responsible for writing the shipyard file. Keptn will not do this for you.
 
 ## Some Rules
 
