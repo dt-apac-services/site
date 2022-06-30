@@ -32,12 +32,16 @@ Want to contribute? It's easy! [Get started now](tutorials/create-tutorial/).
 - [Create a Quality Check](https://dt-apac-services.github.io/site/createqualitycheck.html)
 
 ### Automation Training
-- [1. Dynatrace Problem Enrichment](https://killercoda.com/agardnerit/scenario/problem-enrichment)
-- [2. Dynatrace Release Tracking](https://killercoda.com/agardnerit/scenario/release-tracking)
-- [3. Dynatrace Releases API](https://killercoda.com/agardnerit/scenario/releases-api)
-- [4. Create SLO Dashboard](automationtraining/1-dt-prep/index.md)
-- [5. Create Cluster and Install Keptn / Cloud Automation](https://example.com)
-- [6. Create Your First Quality Gate](https://example.com)
+- [1. Dynatrace DevOps Maturity Roadmap](automationtraining/0-dt-devops-maturity-roadmap/index.md)
+- [2. Dynatrace Problem Enrichment](https://killercoda.com/agardnerit/scenario/problem-enrichment)
+- [3. Dynatrace Release Tracking](https://killercoda.com/agardnerit/scenario/release-tracking)
+- [4. Dynatrace Releases API](https://killercoda.com/agardnerit/scenario/releases-api)
+- [5. Create SLO Dashboard](automationtraining/1-dt-prep/index.md)
+- [6. Create Cluster and Install Keptn / Cloud Automation](automationtraining/2-create-cluster/index.md)
+- [7. Create Your First Keptn Project](automationtraining/3-create-keptn-project/index.md)
+- [8. Explore Keptn](automationtraining/4-explore-keptn/index.md)
+- [9. Run Your First Keptn Sequence](automationtraining/5-run-keptn-sequence/index.md)
+- [10. Install Additional Keptn Service](automationtraining/6-install-jes/index.md)
 
 #### GitHub Repo
 All code for this site can be found in the [underlying GitHub organisation](https://github.com/dt-apac-services).
