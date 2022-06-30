@@ -35,7 +35,7 @@ You are responsible for writing the shipyard file. Keptn will not do this for yo
 ## Some Rules
 
 1. Keptn requires a completely clean upstream Git repo for every new Keptn project. No workarounds, no hacks. Sorry!
-2. Humans (or external tooling) trigger **sequences**. Tooling responds to task events
+2. Humans (or external tooling) trigger **sequences**. Tooling responds to **tasks**
 3. The purpose of a Shipyard (and Keptn in general) is to separate process (as defined in the Shipyard file) from the tooling used to implement those choices
 4. It is best practice NOT to have tooling names in your Shipyard file (eg. task should be called `deploy` not `deployWithJenkins`)
 5. You can have as many stages as you want. These stages can be called anything you like
