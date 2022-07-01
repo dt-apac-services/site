@@ -129,3 +129,9 @@ Your customer needs the results of each evaluation in a third party tool like Sl
 Configure Keptn to send a webhook to your `webhook.site` endpoint every time an evaluation runs.
 
 Ensure the **evaluation result** (pass, warning or fail) and **score** is included in the output.
+
+## Exercise: Dynamically Look Up Dashboard
+
+The Dynatrace service is able to search a tenant for a dashboard. Reconfigure things so that rather than hardcoding a dashboard ID, it is retrieved dynamically.
+
+Hint: The [Dynatrace service documentation](https://github.com/keptn-contrib/dynatrace-service) will help you.
