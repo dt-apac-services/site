@@ -133,8 +133,10 @@ The `.finished` event must also use the `id` of the `.triggered` event in the `t
 
 ## Summary and General Rules
 
-1. Keptn generates a UUID for each sequence execution. The keptn context ID.
-2. Keptn generates a unique ID for every event. this is different to the keptncontext ID.
+1. Keptn generates a UUID for each sequence execution. This is the Keptn context ID and remains the same for all tasks and events in that singular sequence.
+2. Keptn generates a unique ID for every event. This is different to the keptncontext ID.
 3. `.started`, `.status.changed` and `.finished` events must take the `id` from the `.triggered` event and pass it back to keptn in the `triggeredid` field.
+4. `.started`, `.status.changed` and `.finished` events can signal a `result` and a `status` to Keptn. Keptn uses this to influence the success of failure of each task.
+5. Services can be "active" or "passive". There is no difference except their intended usage. "Active" services will be "doing" something (like a webhook triggering a Jenkins pipeline). A "passive" service is reactionary and will usually "be notifying" (eg. Send a Slack message).
 
 
