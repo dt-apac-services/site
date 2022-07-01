@@ -135,3 +135,9 @@ Ensure the **evaluation result** (pass, warning or fail) and **score** is includ
 The Dynatrace service is able to search a tenant for a dashboard. Reconfigure things so that rather than hardcoding a dashboard ID, it is retrieved dynamically.
 
 Hint: The [Dynatrace service documentation](https://github.com/keptn-contrib/dynatrace-service) will help you.
+
+## Exercise: Evaluation Results in Dynatrace
+
+Your customer wants the evaluation results to be attached to the `example.com` synthetic script. Reconfigure Dynatrace and / or the Keptn side to make this happen.
+
+Hint: The [Dynatrace service documentation](https://github.com/keptn-contrib/dynatrace-service) will help you.
