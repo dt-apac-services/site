@@ -44,6 +44,7 @@ Want to contribute? It's easy! [Get started now](tutorials/create-tutorial/).
 - [10. Install Additional Keptn Service](automationtraining/6-install-jes/index.md)
 - [11. Explanations Required](automationtraining/7-explanations/index.md)
 - [12. Active / Passive Services](automationtraining/8-active-passive-services/index.md)
+- [13. Build a Quality Evaluation](automationtraining/9-quality-evaluation/index.md)
 
 #### GitHub Repo
 All code for this site can be found in the [underlying GitHub organisation](https://github.com/dt-apac-services).

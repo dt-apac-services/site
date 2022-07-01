@@ -14,4 +14,12 @@ Make a note of the dashboard ID.
 
 With the following permissions:
 
-- TODO
+- `entities.read` (Read entities)
+- `metrics.read` (Read metrics)
+- `problems.read` (Read problems)
+- `securityProblems.read` (Read security problems)
+- `slo.read` (Read SLO)
+- `DataExport` (Access problem and event feed, metrics, and topology)
+- `DTAQLAccess` (User sessions)
+- `Read configuration` (Read configuration)
+- `WriteConfig` (Write configuration)
