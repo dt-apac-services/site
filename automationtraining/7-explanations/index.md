@@ -129,6 +129,8 @@ Think of `shkeptncontext` as a Purepath ID. It is a unique ID for this entire se
 The `.started` event must use the `id` of the `.triggered` event in the `triggeredid` field. That's how the `.started` event is tied to the `.triggered` event.
 The `.finished` event must also use the `id` of the `.triggered` event in the `triggeredid` field. That's how the `.finished` event is tied to the `.triggered` event.
 
+![](assets/images/explanations-2.png)
+
 ## Summary and General Rules
 
 1. Keptn generates a UUID for each sequence execution. The keptn context ID.
