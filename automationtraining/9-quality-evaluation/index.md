@@ -141,3 +141,11 @@ Hint: The [Dynatrace service documentation](https://github.com/keptn-contrib/dyn
 Your customer wants the evaluation results to be attached to the `example.com` synthetic script. Reconfigure Dynatrace and / or the Keptn side to make this happen.
 
 Hint: The [Dynatrace service documentation](https://github.com/keptn-contrib/dynatrace-service) will help you.
+
+## Exercise: SLI and SLO Files
+
+When Dynatrace scrapes a dashboard it creates an `sli.yaml` and `slo.yaml` file automatically for you.
+
+Explore these files to understand how they work.
+
+Know that you can opt to **not** scrape a dashboard. Instead just manually create and add these files to the Git repo.
