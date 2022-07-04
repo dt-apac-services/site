@@ -1,4 +1,4 @@
-## Active vs. Passive Services
+## Quality Evaluations
 
 Previously you have created a Dynatrace dashboard and an API token.
 
@@ -122,6 +122,34 @@ The Keptn dynatrace service will reach into Dynatrace and pull metrics from the 
 
 In your groups, resolve this issue.
 
+### Troubleshooting: Unknown Space Aggregation
+
+Because Keptn is a collection of microservices, some provided by the core team and others provided by the community, it is important to be able to identify which component is erroring.
+
+If the sequence failed and you received the following message:
+
+```
+Data Explorer tile could not be converted to a metric query: unknown space aggregation: 
+```
+
+Start by identifying which component (or microservice) is broken. Do that by expanding the tasks and see which service responded to the triggered event. That will most likely be your culprit.
+
+![](assets/images/quality-evaluation-8.png)
+
+99% of the time you'll have one task failing and thus one answer. In this case however, the architecture is slightly more complex.
+
+When we request an `evaluation`, the lighthouse-service responds and the first thing it does is issue a `get-sli.triggered` event. In our case we're using Dynatrace so the `dynatrace-service` responds to that `get-sli.triggered` event, reaches out to Dynatrace and retrieves metrics from the dashboard.
+
+Thus in this case, although more complex. It is the `dynatrace service` that is at fault here.
+
+A little bit of experimentation shows that tiles with the aggregation set to `Auto` will cause this error. The dynatrace service must not (yet) support the Auto aggregation.
+
+To resolve, set the tile aggregation to `Avg` (or whatever else you like except `Auto`).
+
+![](assets/images/quality-evaluation-9.png)
+
+Of course, this being open source, you should either fix this in the code and create a Pull Request if you are able. Alternatively, mention this in Keptn Slack or raise an issue for the dynatrace-service so it can be fixed by another community member:  `https://github.com/keptn-contrib/dynatrace-service/issues`
+
 ## Exercise: Send Evaluation Results to Webhook.Site
 
 Your customer needs the results of each evaluation in a third party tool like Slack, MS Teams or as a JIRA ticket.
@@ -151,3 +179,45 @@ Explore these files to understand how they work.
 Know that you can opt to **not** scrape a dashboard. Instead just manually create and add these files to the Git repo.
 
 Do this now: Remove the references to a dashboard and instead, build the sli.yaml and slo.yaml files manually. It is important you know how to do this as, sooner or later, most customers will want to build their files programatically and not have to maintain a dashboard.
+
+## Exercise: Make Timeframe Dynamic
+
+Currently, the evaluation timeframe is hardcoded at 30 minutes. Most likely you want some flexibility with that.
+
+Keptn allows users to pass metadata in the body of a `triggered` event when using the API.
+
+Do this now: Remove the following from the shipyard:
+
+```
+properties:
+  timeframe 30m
+```
+
+and instead push that information via an API call that sends the triggered event (POSTman might help here).
+
+Hint: The `data` block is your place, while there are some mandatory fields (`data.project`, `data.service` and `data.stage`) you are free to pass anything in the data block you wish. The syntax is to pass properties inside `data.taskname`
+
+To trigger `sequence1` and pass a `timeframe` property to the `evaluation` task, the triggered event would look like this:
+
+```
+curl -X POST 'http://<YourKeptn>/api/v1/event' ^
+-H 'x-token: <KeptnAPIToken>' ^
+-H 'Content-Type: application/json' ^
+--data-raw '{
+    "data": {
+        "labels": {
+            "run_by": "<you>"
+        },
+        "project": "my-first-project",
+        "service": "service1",
+        "stage": "dev",
+        "evaluation": {
+            "timeframe": "1h"
+        }
+    },
+    "source": "postman",
+    "type": "sh.keptn.event.dev.sequence1.triggered",
+    "specversion": "1.0",
+    "shkeptnspecversion": "0.2.3"
+}'
+```
