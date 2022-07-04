@@ -149,3 +149,5 @@ When Dynatrace scrapes a dashboard it creates an `sli.yaml` and `slo.yaml` file 
 Explore these files to understand how they work.
 
 Know that you can opt to **not** scrape a dashboard. Instead just manually create and add these files to the Git repo.
+
+Do this now: Remove the references to a dashboard and instead, build the sli.yaml and slo.yaml files manually. It is important you know how to do this as, sooner or later, most customers will want to build their files programatically and not have to maintain a dashboard.
