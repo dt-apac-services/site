@@ -47,6 +47,7 @@ Want to contribute? It's easy! [Get started now](tutorials/create-tutorial/).
 - [13. Build a Quality Evaluation](automationtraining/9-quality-evaluation/index.md)
 - [14. Remote Execution Clusters](automationtraining/10-remote-clusters/index.md)
 - [15. Triggering Customer Tools](automationtraining/11-triggering-customer-tools/index.md)
+- [16. Write A Custom Integration](automationtraining/12-write-custom-integration/index.md)
 
 #### GitHub Repo
 All code for this site can be found in the [underlying GitHub organisation](https://github.com/dt-apac-services).
