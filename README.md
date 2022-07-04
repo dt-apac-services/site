@@ -45,6 +45,8 @@ Want to contribute? It's easy! [Get started now](tutorials/create-tutorial/).
 - [11. Explanations Required](automationtraining/7-explanations/index.md)
 - [12. Active / Passive Services](automationtraining/8-active-passive-services/index.md)
 - [13. Build a Quality Evaluation](automationtraining/9-quality-evaluation/index.md)
+- [14. Remote Execution Clusters](automationtraining/10-remote-clusters/index.md)
+- [15. Triggering Customer Tools](automationtraining/11-triggering-customer-tools/index.md)
 
 #### GitHub Repo
 All code for this site can be found in the [underlying GitHub organisation](https://github.com/dt-apac-services).
