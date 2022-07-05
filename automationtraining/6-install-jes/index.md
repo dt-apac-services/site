@@ -103,3 +103,11 @@ Find a container image you know / like and have JES run that instead of `alpine`
 ## Exercise: Run a shell (or Powershell script) with JES
 
 Create a shell or powershell script (contents are up to you). Have JES run that script.
+
+## Exercise: Link Two Sequences
+
+Sequences are standalone by default. Often though it is helpful to link sequences together to form more complex workflows.
+
+Define a new sequence in the shipyard with a task. Find a way to have the second sequence triggered when the first sequence completes.
+
+The shipyard docs page might help you: `https://keptn.sh/docs/0.16.x/manage/shipyard/`
