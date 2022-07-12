@@ -48,7 +48,7 @@ helm install keptn keptn/keptn \
 --set=control-plane.apiGatewayNginx.type=LoadBalancer
 ```
 
-Keptn is installed in the `keptn` namespace. Run `kubectl get services` to show the Load balancer IP. Visit that in a web browser. This is the Keptn bridge.
+Keptn is installed in the `keptn` namespace. Run `kubectl -n keptn get service` to show the Load balancer IP. Visit that in a web browser. This is the Keptn bridge.
 
 ## Retrieve Keptn Bridge Username and Password
 
