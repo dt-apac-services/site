@@ -40,7 +40,7 @@ Gather and set some details of your Keptn environment. Obviously use YOUR IP add
 
 ```
 export KEPTN_ENDPOINT=http://1.2.3.4
-export KEPTN_BRIDGE=http://1.2.3.4/bridge
+export KEPTN_BRIDGE_URL=http://1.2.3.4/bridge
 ```
 
 Install the Dynatrace service:
